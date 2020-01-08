@@ -22,7 +22,7 @@ router.beforeEach(async (to, from, next) => {
       next();
     } else {
       // 不在则跳转到登录界面
-      next(`/login`);
+      // next(`/login`);
     }
   }
 });

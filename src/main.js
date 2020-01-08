@@ -11,6 +11,7 @@ import '@/icons/iconfont/iconfont.css';
 import '@/styles/reset.css';
 import '@/styles/index.scss';
 import '@/permission.js';
+import '@/utils/variables';
 
 Vue.config.productionTip = false;
 
