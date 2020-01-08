@@ -12,7 +12,7 @@ module.exports = {
     'space-before-function-paren': 0, // 函数名后面的括号可以不需要空格
     semi: ['error', 'always'],
     'no-path-concat': 0, //node中不能使用__dirname或__filename做路径拼接
-    'no-shadow': 2, // 外部作用域中的变量不能与它所包含的作用域中的变量或参数同名
+    // 'no-shadow': 2, // 外部作用域中的变量不能与它所包含的作用域中的变量或参数同名
     'no-trailing-spaces': 2, // 每行结束后不同拥有空格
     'no-undef': 0, //不能有未定义的变量
     'no-with': 2, //禁用with
