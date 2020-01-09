@@ -4,6 +4,10 @@ import axios from '../http';
 
 const baseApi = {
   // -------------------------------------公共接口----------------------------------------
+  // 获取区域枚举
+  apiRegion () {
+    return axios.get(`${base.yifd}/enumUtil/region`);
+  },
   // 获取签章统一接口
   apiESignatureSealData (id) {
     return axios.get(`${base.yifd}/public/eSignatureSealData/${id}`);

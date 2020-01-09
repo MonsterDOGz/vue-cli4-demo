@@ -11,13 +11,6 @@ const constantRoutes = [
     component: () => import('../views/Home'),
     meta: { title: '首页' }
   },
-  {
-    path: '/about',
-    name: 'about',
-    hidden: true,
-    component: () => import('../views/About.vue'),
-    meta: { title: '关于' }
-  },
   // 404页面需要放到最末尾,先行注册404界面,否则无法指向404界面会报错
   {
     path: '/404',
