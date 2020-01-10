@@ -1,3 +1,7 @@
+<!-- 此预览pdf组件需要需要引入到目标组件中使用 -->
+<!-- 例如"import previewImg from '@/components/pdf.vue'" -->
+<!-- html中使用<pdf v-if="pdfBox" :pdfUrl="pdfUrl" v-on:toFatherClosePdf="pdfBox = false"></pdf>，url是传入的数据，详情见下 -->
+<!-- 需要引入@/mixin/base.js中的previewMixin -->
 <template>
   <div class="pdf">
     <div class="pdfBox">
@@ -17,9 +21,16 @@
 <script>
 import PDFJS from 'pdfjs-dist';
 export default {
+  /**
+  * 从父组件传入pdf信息，以对象形式传入，必须包含url字段，目前只能预览一张pdf
+  * eg:
+  * pdfUrl: {
+  *   url: 'https://xitianqujing.oss-cn-hangzhou.aliyuncs.com/001213d1ebcd497e96aacd07c622cc75.pdf'
+  * }
+  */
   props: {
     pdfUrl: {
-      type: String,
+      type: Object,
       required: true,
       default: () => {
         return { message: 'hello' };
@@ -49,8 +60,8 @@ export default {
           ctx.backingStorePixelRatio ||
           1;
         let ratio = dpr / bsr;
+        console.log(document.body.clientWidth);
         let viewport = page.getViewport(900 / page.getViewport(1).width);
-        console.log(viewport);
         // let viewport = page.getViewport(
         //   parseInt(this.pdfInPageInfo.pdfWidth) / page.getViewport(1).width
         // );
@@ -82,7 +93,7 @@ export default {
     }
   },
   created () {
-    this._loadFile(this.pdfUrl);
+    this._loadFile(this.pdfUrl.url);
   }
 };
 </script>
@@ -100,8 +111,6 @@ export default {
     width: 900px;
     height: 90vh;
     overflow-y: auto;
-    // margin: 0 auto;
-    // margin-top: 5%;
     position: absolute;
     top: 50%;
     left: 50%;
