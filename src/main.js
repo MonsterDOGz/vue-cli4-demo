@@ -29,6 +29,7 @@ Vue.prototype.$api = api;
 Vue.prototype.$echarts = echarts;
 
 new Vue({
+  el: '#app',
   router,
   store,
   render: h => h(App)

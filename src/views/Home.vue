@@ -4,12 +4,7 @@
     <el-button @click="btn2">打开dialog</el-button>
     <el-button @click="btn3">打开MessageBox</el-button>
     <img src="@/assets/眼睛.png" class="yulan" @click="previewImg()">
-    <ul>
-      <li v-for="(item, index) of list" :key="index">
-        <img src="@/assets/眼睛.png" class="yulan" @click="preview(item)">
-      </li>
-    </ul>
-    <el-button @click="previewPdf()">打开pdf</el-button>
+    <!-- <el-button @click="previewPdf()">打开pdf</el-button> -->
     <el-dialog
       title="提示"
       :visible.sync="dialogVisible"
@@ -123,21 +118,6 @@ export default {
         url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=85690711,3884201894&fm=27&gp=0.jpg',
         title: '图片1'
       },
-      list: [
-        {
-          url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=85690711,3884201894&fm=27&gp=0.jpg'
-        },
-        {
-          url: 'https://xitianqujing.oss-cn-hangzhou.aliyuncs.com/001213d1ebcd497e96aacd07c622cc75.pdf'
-        },
-        {
-          url: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3564877025,796183547&fm=27&gp=0.jpg',
-          title: '图片2'
-        }
-      ],
-      pdfUrl: {
-        url: 'https://xitianqujing.oss-cn-hangzhou.aliyuncs.com/001213d1ebcd497e96aacd07c622cc75.pdf'
-      },
       tableData: [{
         date: '2016-05-02',
         name: '王小虎',
@@ -153,7 +133,7 @@ export default {
         isCanUpload: false, // 是否可以上传
         isNeedSecret: false, // 是否需要加密
         uploadId: 2, // 文件上传ID
-        url: 'https://xitianqujing.oss-cn-hangzhou.aliyuncs.com/001213d1ebcd497e96aacd07c622cc75.pdf' // 文件url
+        url: 'http://xitianqujing.oss-cn-hangzhou.aliyuncs.com/test/d37a0ee5-9982-4c5e-873b-846bad926a37.pdf' // 文件url
       }, {
         date: '2016-05-01',
         name: '王小虎',
@@ -161,7 +141,7 @@ export default {
         isCanUpload: false, // 是否可以上传
         isNeedSecret: true, // 是否需要加密
         uploadId: 3, // 文件上传ID
-        url: 'https://xitianqujing.oss-cn-hangzhou.aliyuncs.com/001213d1ebcd497e96aacd07c622cc75.pdf' // 文件url
+        url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=85690711,3884201894&fm=27&gp=0.jpg' // 文件url
       }, {
         date: '2016-05-03',
         name: '王小虎',

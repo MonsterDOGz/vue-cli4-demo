@@ -34,7 +34,13 @@ import upload from '@/components/upload.vue'; // 加密上传附件弹框
 import uploadNoSecret from '@/components/uploadNoSecret.vue'; // 不加密上传附件弹框
 export default {
   /**
-  * 传入的info，是表格当前行所有信息
+  * 传入的info，是表格当前行所有信息，必须包含以下字段
+  * eg:
+  * info: {
+  *   isCanUpload: Boolean, // 是否可以上传
+  *   name: String, // 文件名
+  *   fileType: String // 上传文件类型限制
+  * }
   */
   props: {
     info: {

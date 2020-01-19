@@ -13,7 +13,7 @@
     </div>
     <div class="previewClose"
          @click="open">
-      <i class="iconfont iconquxiao"></i>
+      <i class="iconfont iconquxiao close"></i>
     </div>
   </div>
 </template>
@@ -93,6 +93,7 @@ export default {
     }
   },
   created () {
+    console.log(this.pdfUrl.url);
     this._loadFile(this.pdfUrl.url);
   }
 };
@@ -126,7 +127,8 @@ export default {
     right: -80px;
     cursor: pointer;
     transition: 0.2s;
-    i {
+    .close {
+      line-height: 50px;
       font-size: 50px;
       position: absolute;
       top: 55%;

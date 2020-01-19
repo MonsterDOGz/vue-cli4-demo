@@ -48,7 +48,7 @@ export default {
     } else if (this.img instanceof Object) { // 如果传入的是单个图片的对象
       this.imgs.push(this.img);
     } else { // 如果预览img和预览pdf一起使用
-      let temp = {};
+      const temp = {};
       temp.url = this.img;
       this.imgs.push(temp);
     }

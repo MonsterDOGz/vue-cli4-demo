@@ -72,7 +72,7 @@ var instance = axios.create({
  */
 instance.interceptors.request.use(
   function (config) {
-    // 该位置会获取登陆成功时的token数据，保存到Authorization(清风定义绑定的头部参数为token)中，验证token是否存在，并且
+    // 该位置会获取登陆成功时的token数据，保存到Authorization(定义绑定的头部参数为token)中，验证token是否存在，并且
     // 与登陆时的token进行对比，验证token是否正确
     var token = window.sessionStorage.getItem('token');
     if (token) {

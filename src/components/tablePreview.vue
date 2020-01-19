@@ -19,7 +19,7 @@
         v-if="info.uploadId"
         @click="preview(info)"></i>
     <!-- 预览img -->
-    <previewImg :img="imgs" ref="comView"></previewImg>
+    <previewImgInTable :img="imgs" v-if="previewImgBox" v-on:toFatherCloseImg="previewImgBox = false"></previewImgInTable>
     <!-- 预览pdf -->
     <pdf v-if="pdfBox" :pdfUrl="pdfUrl" v-on:toFatherClosePdf="pdfBox = false"></pdf>
   </div>
@@ -27,11 +27,16 @@
 
 <script>
 import { previewMixin } from '@/mixin/base.js';
-import previewImg from '@/components/previewImg.vue'; // 预览图片组件
+import previewImgInTable from '@/components/previewImgInTable.vue'; // 表格内预览图片组件
 import pdf from '@/components/pdf.vue'; // 预览pdf组件
 export default {
   /**
   * 传入的info，是表格当前行所有信息
+  * eg:
+  * info: {
+  *   uploadId: Number, // 文件上传id
+  *   url: String, // 文件url
+  * }
   */
   props: {
     info: {
@@ -44,7 +49,7 @@ export default {
   },
   mixins: [previewMixin],
   components: {
-    previewImg,
+    previewImgInTable,
     pdf
   },
   data () {
@@ -52,8 +57,6 @@ export default {
     };
   },
   methods: {
-  },
-  created () {
   }
 };
 </script>

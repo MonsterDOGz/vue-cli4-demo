@@ -25,6 +25,10 @@
 export default {
   /**
   * 传入的info，是表格当前行所有信息
+  * eg:
+  * info: {
+  *   uploadId: Number // 文件上传id
+  * }
   */
   props: {
     info: {
