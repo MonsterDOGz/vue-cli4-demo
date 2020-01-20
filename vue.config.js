@@ -27,8 +27,8 @@ module.exports = {
     open: true, // 是否在启动成功后直接打开页面
     // http 代理配置
     proxy: {
-      '/api': {
-        target: 'http://192.168.11.31:9101',
+      '/api/yifd': {
+        target: 'http://192.168.10.191:8200',
         changeOrigin: true,
         pathRewrite: {
           '^/api/yifd': ''
