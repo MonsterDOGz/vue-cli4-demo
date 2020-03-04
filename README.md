@@ -61,7 +61,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 │   ├── main.js                // 入口文件 加载组件 初始化等
 │   ├── permission.js          // 检测用户是否登录，以及token,全局路由守卫配置
 ├── .gitignore                 // git 忽略项
-├── .browserslistrc            // 浏览器兼容的配置
+├── .browserslistrc            // 浏览器兼容的配置，用来指定项目的目标浏览器的范围
 ├── .babel.config.js           // 使用babel代码转码器时的配置
 ├── .env.development           // 开发环境请求路径配置
 ├── .env.production            // 生产环境请求路径配置

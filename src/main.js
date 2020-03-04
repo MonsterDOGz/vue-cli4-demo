@@ -10,6 +10,7 @@ import Viewer from 'v-viewer';
 import 'viewerjs/dist/viewer.css';
 import '@/filter';
 import '@/icons/iconfont/iconfont.css';
+import '@/icons/iconfont/iconfont.js';
 import '@/styles/reset.css';
 import '@/styles/elementui.css'; // 初始化elementui样式
 import '@/styles/index.scss';

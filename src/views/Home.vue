@@ -77,6 +77,11 @@
         </template>
       </el-table-column>
     </el-table>
+    <div>
+      <svg class="icon" aria-hidden="true" style="font-size:30px;fill: green !important;">
+        <use xlink:href="#iconxinghao"></use>
+      </svg>
+    </div>
   </div>
 </template>
 
@@ -177,6 +182,32 @@ export default {
         });
       });
     }
+  },
+  created () {
+    var a = [12, 35, 25, 100];
+    console.log(a.filter(item => {
+      return item > 20;
+    }));
+    a.forEach((item, index, arr) => {
+      console.log(item, index, arr);
+    });
+    var myArr = Array.from('s3dc');
+    console.log(myArr);
+    var setObj = new Set(['a', 'b', 'c']);
+    console.log(setObj);
+    var m = new Map([['Michael', 95], ['Bob', 75], ['Tracy', 85]]);
+    console.log(m.get('Bob'));
+    m.set('zhou', 100);
+    m.forEach((item, index) => {
+      console.log(item, index);
+    });
+    var arr = [2, 2, 3, 1, 4, 5, 4];
+    var s = new Set(arr);
+    console.log(s);
+    var arr2 = Array.from(s);
+    console.log(arr2);
+    var s1 = new Set();
+    console.log(Array.isArray(a));
   }
 };
 </script>
