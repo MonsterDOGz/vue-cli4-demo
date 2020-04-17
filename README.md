@@ -1,26 +1,31 @@
 # monsterdog
 
 ## Project setup
+
 ```
 npm install
 ```
 
 ### Compiles and hot-reloads for development
+
 ```
 npm run serve
 ```
 
 ### Compiles and minifies for production
+
 ```
 npm run build
 ```
 
 ### Lints and fixes files
+
 ```
 npm run lint
 ```
 
 ### Customize configuration
+
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### 项目目录结构
@@ -66,7 +71,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ├── .env.development           // 开发环境请求路径配置
 ├── .env.production            // 生产环境请求路径配置
 ├── .eslintrc                  // eslint的配置文件
-├── .editorconfig              // 简单的编码规范设置
+├── .editorconfig              // 实现多种编辑器的代码风格统一
 ├── .prettierrc.js             // 项目代码格式化规范
 ├── package-lock.json          // 用来记录当前状态下实际安装的各个npm package的具体来源和版本号
 ├── package.json               // 定义了这个项目所需要的各种模块，以及项目的配置信息（比如名称、版本、许可证等元数据）

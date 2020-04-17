@@ -1,3 +1,5 @@
+// 需配合prettier插件使用
+// 在设置>文本编辑器>正在格式化>选择保存时格式化
 module.exports = {
   jsxSingleQuote: true,
   disableLanguages: [], // 句尾添加分号

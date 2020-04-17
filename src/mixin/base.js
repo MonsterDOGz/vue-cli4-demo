@@ -60,7 +60,33 @@ const previewMixin = {
   }
 };
 
+// ------------------------------复制文本到剪切板------------------------------
+// template模版中加入  <input id="input" class="hiddenInput">
+// style样式中加入：
+// .hiddenInput
+//   position absolute
+//   z-index -1000
+//   opacity 0
+const copyText = {
+  data () {
+    return {};
+  },
+  methods: {
+    copyText (val) {
+      var text = val;
+      var input = document.getElementById('input'); // 获取隐藏input的dom
+      input.value = text; // 修改文本框的内容
+      input.select(); // 选中文本
+      document.execCommand('copy'); // 执行浏览器复制命令
+      this.$message.success({
+        message: '复制成功'
+      });
+    }
+  }
+};
+
 export {
   loadingMixin,
-  previewMixin
+  previewMixin,
+  copyText
 };
