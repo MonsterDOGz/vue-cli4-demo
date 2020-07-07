@@ -1,48 +1,35 @@
 <template>
-  <div class="test">
-    <div class="wrapper">
-      <div class="item item1">1</div>
-    </div>
-    <el-button @click="clickBtn">{{num}}</el-button>
+  <div class="index">
+    <el-button @click="visibleDialog = !visibleDialog">按钮</el-button>
+    <custom-dialog title="提示" :visible.sync="visibleDialog" @opened="$_handleOpened" @confirm="$_handleConfirm" @cancel="$_handleCancel">这是一段内容</custom-dialog>
   </div>
 </template>
 
 <script>
+import customDialog from './customDialog.vue';
 export default {
+  components: {
+    customDialog
+  },
   data () {
     return {
-      num: 0
+      visibleDialog: false
     };
   },
   methods: {
-    clickBtn: _.debounce(
-      function () {
-        this.num++;
-        console.log(this.num);
-      }, 1000)
+    $_handleOpened () {},
+    $_handleConfirm () {
+      this.visibleDialog = !this.visibleDialog;
+    },
+    $_handleCancel () {
+      this.visibleDialog = !this.visibleDialog;
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.test {
-  .wrapper {
-    height: 500px;
-    display: grid;
-    grid-template-columns: repeat(5, 20%);
-    grid-template-rows: repeat(5, 20%);
-    .item {
-      color: #fff;
-      text-align: center;
-      // border: 3px solid #fff;
-      // line-height: 300px;
-    }
-    .item1 {
-      background: rgba(255, 0, 0, .1);
-      // grid-row: 1/-1;
-      // grid-column: 2/span 2;
-      grid-area: 1/4/6/5;
-    }
-  }
+.index {
+  width: 100%;
 }
 </style>
