@@ -17,6 +17,7 @@ import '@/styles/index.scss';
 // import '@/permission.js';
 import '@/utils/variables';
 import api from '@/request/index.js';
+var _ = require('lodash');
 
 Vue.config.productionTip = false;
 
