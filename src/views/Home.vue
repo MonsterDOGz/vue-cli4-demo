@@ -15,9 +15,9 @@
     <previewImg :img="imgs" ref="comView"></previewImg>
     <pdf v-if="pdfBox" :pdfUrl="pdfUrl" v-on:toFatherClosePdf="pdfBox = false"></pdf>
     <el-table :data="tableData" style="width: 1200px">
-      <el-table-column prop="date" label="日期" width="180" class="upload"> </el-table-column>
-      <el-table-column prop="name" label="姓名" width="180"> </el-table-column>
-      <el-table-column prop="address" label="地址" width="180"> </el-table-column>
+      <el-table-column prop="date" label="日期" width="180" class="upload"></el-table-column>
+      <el-table-column prop="name" label="姓名" width="180"></el-table-column>
+      <el-table-column prop="address" label="地址" width="180"></el-table-column>
       <el-table-column label="上传" align="center" width="180">
         <template slot-scope="scope">
           <tableUpload :info="scope.row"></tableUpload>
@@ -46,7 +46,7 @@
     </el-table>
     <div>
       <svg class="icon" aria-hidden="true" style="font-size:30px;fill: green !important;">
-        <use xlink:href="#iconxinghao"></use>
+        <use xlink:href="#iconxinghao" />
       </svg>
     </div>
   </div>
@@ -135,7 +135,9 @@ export default {
   },
   methods: {
     btn() {
-      this.openFullScreen('疯狂加载中。。。。。。。。。');
+      // this.openFullScreen('疯狂加载中。。。。。。。。。');
+      console.log(1);
+      window.scrollBy(0, 100);
     },
     btn2() {
       this.dialogVisible = true;
@@ -161,18 +163,55 @@ export default {
     }
   },
   created() {
-    var fruits = ['Banana', 'Orange'];
-    var energy = fruits.key();
-    console.log(energy);
+    console.log(new Date());
+    console.log(new Date().getTime());
+    var a = 'https://xitianqujin.oss.com/sfagsdfasfkjfkjfksjhadasd.jpg';
+    var b = a.split('.');
+    console.log(b);
+    console.log(window.navigator.platform);
+    _.times(5, function(a) {
+      console.log(a);
+    });
+    var objA = {
+      name: '戈德斯文'
+    };
+    var objB = _.cloneDeep(objA);
+    console.log(objA === objB);
+    var asd = [
+      {
+        a: 123,
+        d: [
+          {
+            name: '666'
+          }
+        ]
+      },
+      {
+        c: 789,
+        d: [
+          {
+            name: '3'
+          }
+        ]
+      }
+    ];
+    console.log(_.map(asd, 'd[0].name'));
+    console.log(_.random(1, 100, true));
+    var objAA = { name: '戈德斯文', car: '宝马' };
+    var objBB = { name: '柴硕', loveEat: true };
+    console.log(_.assign(objAA, objBB));
+    var code = ['eq', 'fg', 'yrty', 'vcb'];
+    console.log(_.sampleSize(code, 3));
   }
 };
 </script>
 
 <style lang="scss" scoped>
 .home {
-  width: 100%;
-  height: 700px;
+  width: 1000px;
+  height: 1700px;
   background-color: #e6a23c;
+  overflow-x: auto;
 }
 .yulan {
   width: 30px;

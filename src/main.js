@@ -29,6 +29,7 @@ Viewer.setDefaults({
 
 Vue.prototype.$api = api;
 Vue.prototype.$echarts = echarts;
+Vue.prototype._ = require('lodash');
 
 new Vue({
   el: '#app',
