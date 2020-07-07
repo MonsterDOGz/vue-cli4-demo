@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import Dialog from 'element-ui';
+import { Dialog } from 'element-ui';
 export default {
   inheritAttrs: false,
   props: {
