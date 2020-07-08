@@ -2,34 +2,27 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import echarts from 'echarts';
+import '@/filter'; // 引入全局过滤器
+import './components/globalComponents/_globals.js'; // 引入全局注册组件
 import '@/styles/theme/index.css'; // 引入elementui自定义主题
-import ElementUI from 'element-ui';
-// import 'element-ui/lib/theme-chalk/index.css'; // 引入elementui默认样式
-import Viewer from 'v-viewer';
-import 'viewerjs/dist/viewer.css';
-import '@/filter';
-import '@/icons/iconfont/iconfont.css';
-import '@/icons/iconfont/iconfont.js';
-import '@/styles/reset.css';
 import '@/styles/elementui.css'; // 初始化elementui样式
+import ElementUI from 'element-ui';
+import '@/icons/iconfont/iconfont.css';
+import '@/styles/reset.css';
 import '@/styles/index.scss';
-// import '@/permission.js';
-import '@/utils/variables';
+// import '@/utils/variables';
+import echarts from 'echarts';
 import api from '@/request/index.js';
-var _ = require('lodash');
 
 Vue.config.productionTip = false;
-
 Vue.use(ElementUI);
-Vue.use(Viewer);
-Viewer.setDefaults({
-  Options: { 'inline': true, 'button': true, 'navbar': true, 'title': true, 'toolbar': true, 'tooltip': true, 'movable': true, 'zoomable': true, 'rotatable': true, 'scalable': true, 'transition': true, 'fullscreen': true, 'keyboard': true, 'url': 'data-source' }
-});
 
-Vue.prototype.$api = api;
-Vue.prototype.$echarts = echarts;
-Vue.prototype._ = require('lodash');
+// 声明全局属性
+Object.assign(Vue.prototype, {
+  $api: api,
+  $echarts: echarts,
+  _: require('lodash')
+});
 
 new Vue({
   el: '#app',

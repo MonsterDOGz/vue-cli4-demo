@@ -4,21 +4,8 @@ import axios from '../http';
 
 const baseApi = {
   // -------------------------------------公共接口----------------------------------------
-  // 获取区域枚举
   apiRegion () {
     return axios.get(`${base.yifd}/enumUtil/region`);
-  },
-  // 获取签章统一接口
-  apiESignatureSealData (id) {
-    return axios.get(`${base.yifd}/public/eSignatureSealData/${id}`);
-  },
-  // 签章验证时的密码验证
-  apiPasswordYz (params) {
-    return axios.post(`${base.yifd}/user/checkPassword`, params);
-  },
-  // 文件上传
-  apiGetPolicy (needSave) { // 获取手机验证码，校验当前用户是否存在 json传参
-    return axios.get(`${base.file}/file/getPolicy/${needSave}`);
   }
 };
 

@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import customBtn from './test/custom-btn.vue';
 import pdf from '@/components/pdf.vue';
 export default {
   name: 'home',
