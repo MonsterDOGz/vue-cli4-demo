@@ -13,6 +13,9 @@ import '@/styles/index.scss';
 // import '@/utils/variables';
 import echarts from 'echarts';
 import api from '@/request/index.js';
+import { init, bind } from './utils/custom-life-cycle';
+
+init();
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
@@ -24,9 +27,12 @@ Object.assign(Vue.prototype, {
   _: require('lodash')
 });
 
-new Vue({
+const vm = new Vue({
   el: '#app',
   router,
   store,
   render: h => h(App)
 }).$mount('#app');
+
+// 将rootVm 绑定到生命周期函数监听里面
+bind(vm);

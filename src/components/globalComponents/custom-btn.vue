@@ -1,12 +1,17 @@
 <template>
   <!-- 自定义按钮 -->
-  <span class="btn">
+  <span class="btn" @click="$_click">
     <slot></slot>
   </span>
 </template>
 
 <script>
 export default {
+  methods: {
+    $_click () {
+      this.$emit('click');
+    }
+  }
 };
 </script>
 
