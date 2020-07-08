@@ -100,7 +100,7 @@ export default {
       // console.log(this.info.dirtPatApplyForId)
       var formData = new FormData();
       formData.append('file', params.file);
-      formData.append('userId', this.$store.state.userInfo.userId);
+      // formData.append('userId', this.$store.state.userInfo.userId);
       // console.log(params, 'formData')
       // formData.append('dirtPatApplyForId', this.info.dirtPatApplyForId)
       this.$api.baseApi.apiUpload(formData).then(res => {

@@ -1,15 +1,21 @@
 <template>
   <div class="index">
     <el-button @click="visibleDialog = !visibleDialog">按钮</el-button>
-    <custom-dialog title="提示" :visible.sync="visibleDialog" @confirm="$_handleConfirm" @cancel="$_handleCancel">这是一段内容</custom-dialog>
+    <custom-dialog title="提示" :visible.sync="visibleDialog" @confirm="$_handleConfirm" @cancel="$_handleCancel">
+      这是一段内容
+    </custom-dialog>
+    <customBtn>上一步</customBtn>
+    <customBtn>下一步</customBtn>
   </div>
 </template>
 
 <script>
 import customDialog from './customDialog.vue';
+import customBtn from './custom-btn.vue';
 export default {
   components: {
-    customDialog
+    customDialog,
+    customBtn
   },
   data () {
     return {
@@ -30,5 +36,8 @@ export default {
 <style lang="scss" scoped>
 .index {
   width: 100%;
+  .btn + .btn {
+    margin-left: 40px;
+  }
 }
 </style>

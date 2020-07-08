@@ -19,7 +19,9 @@
 </template>
 
 <script>
-import PDFJS from 'pdfjs-dist';
+import pdfjsLib from 'pdfjs-dist';
+var CMAP_URL = 'https://unpkg.com/pdfjs-dist@2.0.943/cmaps/';
+// pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.js`;
 export default {
   /**
   * 从父组件传入pdf信息，以对象形式传入，必须包含url字段，目前只能预览一张pdf
@@ -60,11 +62,9 @@ export default {
           ctx.backingStorePixelRatio ||
           1;
         let ratio = dpr / bsr;
-        console.log(document.body.clientWidth);
-        let viewport = page.getViewport(900 / page.getViewport(1).width);
-        // let viewport = page.getViewport(
-        //   parseInt(this.pdfInPageInfo.pdfWidth) / page.getViewport(1).width
-        // );
+        let viewport = page.getViewport({
+          scale: 900 / page.getViewport({ scale: 1 }).width
+        });
         canvas.width = viewport.width * ratio;
         canvas.height = viewport.height * ratio;
         canvas.style.width = viewport.width + 'px';
@@ -82,9 +82,14 @@ export default {
       });
     },
     _loadFile (url) {
-      PDFJS.getDocument(url).then(pdf => {
+      var pdfInfo = {
+        url: url,
+        cMapUrl: CMAP_URL,
+        cMapPacked: true
+      };
+      var loadingTask = pdfjsLib.getDocument(pdfInfo);
+      loadingTask.promise.then(pdf => {
         this.pdfDoc = pdf;
-        console.log(pdf);
         this.pages = this.pdfDoc.numPages;
         this.$nextTick(() => {
           this._renderPage(1);
@@ -93,7 +98,6 @@ export default {
     }
   },
   created () {
-    console.log(this.pdfUrl.url);
     this._loadFile(this.pdfUrl.url);
   }
 };
