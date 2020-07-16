@@ -14,7 +14,7 @@ import '@/styles/index.scss';
 import echarts from 'echarts';
 import api from '@/request/index.js';
 import { init, bind } from './utils/custom-life-cycle';
-
+import cLoading from '@/components/loading/index.js';
 init();
 
 Vue.config.productionTip = false;
@@ -24,7 +24,8 @@ Vue.use(ElementUI);
 Object.assign(Vue.prototype, {
   $api: api,
   $echarts: echarts,
-  _: require('lodash')
+  _: require('lodash'),
+  $cLoading: cLoading
 });
 
 const vm = new Vue({

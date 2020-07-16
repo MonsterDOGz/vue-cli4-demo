@@ -6,14 +6,15 @@
       :visible.sync="visibleDialog"
       @confirm="$_handleConfirm"
       @cancel="$_handleCancel"
-    >这是一段内容</custom-dialog>
-    <custom-btn>上一步</custom-btn>
+      >这是一段内容</custom-dialog
+    >
+    <custom-btn @click="b">上一步</custom-btn>
     <custom-btn @click="a">下一步</custom-btn>
     <!-- ---------------插槽--------------- -->
     <oneroom>
       <template #todo="{ todo }">
         <span v-if="todo.isComplete">(OK)</span>
-        {{todo.text}}
+        {{ todo.text }}
       </template>
     </oneroom>
   </div>
@@ -27,12 +28,19 @@ export default {
   },
   data() {
     return {
-      visibleDialog: false
+      visibleDialog: false,
+      loading: false
     };
   },
   methods: {
-    a () {
+    a() {
       console.log(123);
+    },
+    b() {
+      this.loading = this.$cLoading({ text: '正在加载中...' });
+      setTimeout(() => {
+        this.loading.close();
+      }, 3000);
     },
     $_handleConfirm() {
       this.visibleDialog = !this.visibleDialog;
