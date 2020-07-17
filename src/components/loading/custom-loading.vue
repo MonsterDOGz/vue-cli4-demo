@@ -4,7 +4,7 @@
     <div v-show="visible" class="mask">
       <!--loading中间的图标-->
       <div class="spinner">
-        <i class="iconfont icon-loading iconLoading"></i>
+        <i class="iconfont icon-loading1 iconLoading"></i>
         <!--loading上面显示的文字-->
         <p class="text">{{ text }}</p>
       </div>
@@ -31,7 +31,7 @@ export default {
   z-index: 1000;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, .4);
+  background: rgba(0, 0, 0, .8);
   .spinner {
     position: absolute;
     top: 50%;
@@ -41,16 +41,18 @@ export default {
     .iconLoading {
       color: #409EFF;
       font-size: 28px;
-      animation: clockwise 4s linear infinite;
+      display: inline-block;
+      border-radius: 50%;
+      animation: clockwise 2s linear infinite;
     }
     .text {
-      color: #fff;
-      margin-top: 20px;
+      color: #409EFF;
+      margin-top: 16px;
     }
   }
 }
 .fade-enter-active, .fade-leave-active {
-  transition: .5s;
+  transition: .3s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
