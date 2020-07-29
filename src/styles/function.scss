@@ -3,4 +3,33 @@
 // px 转换成 rem
 @function px2rem ($size) {
   @return ($size / 50)
+};
+
+// 字体溢出显示省略号
+@function noWrap () {
+  @return (
+    text-overflow ellipsis
+    overflow hidden
+    white-space nowrap
+  )
+};
+
+// 清除浮动
+@function clear () {
+  @return (
+    clear both
+    content ' '
+    display block
+    visibility hidden
+  )
+};
+
+// 旋转动画
+@keyframes clockwise {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

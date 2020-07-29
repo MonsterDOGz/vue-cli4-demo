@@ -1,3 +1,4 @@
+<!-- svg形式使用icon -->
 <template>
   <svg :class="svgClass" aria-hidden="true">
     <use :xlink:href="iconName"></use>

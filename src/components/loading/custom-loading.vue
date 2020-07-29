@@ -27,6 +27,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/styles/index.scss';
 .mask {
   position: fixed;
   top: 0;
@@ -57,16 +58,8 @@ export default {
 .fade-enter-active, .fade-leave-active {
   transition: .3s;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+.fade-enter, .fade-leave-to {
   opacity: 0;
   transform: translateY(-6px);
-}
-@keyframes clockwise {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
 }
 </style>

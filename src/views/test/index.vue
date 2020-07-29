@@ -45,9 +45,9 @@ export default {
     },
     b() {
       this.loading = this.$cLoading({ text: '正在加载中...' });
-      // setTimeout(() => {
-      //   this.loading.close();
-      // }, 3000);
+      setTimeout(() => {
+        this.loading.close();
+      }, 3000);
     },
     $_handleConfirm() {
       this.visibleDialog = !this.visibleDialog;
