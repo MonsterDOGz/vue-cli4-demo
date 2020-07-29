@@ -17,6 +17,9 @@
         {{ todo.text }}
       </template>
     </oneroom>
+    <!-- 自定义指令 -->
+    <div class="box" v-cLoading="cLoading">
+    </div>
   </div>
 </template>
 
@@ -29,18 +32,22 @@ export default {
   data() {
     return {
       visibleDialog: false,
-      loading: false
+      loading: false,
+      cLoading: false
     };
   },
   methods: {
     a() {
-      console.log(123);
+      this.cLoading = true;
+      setTimeout(() => {
+        this.cLoading = false;
+      }, 3000);
     },
     b() {
       this.loading = this.$cLoading({ text: '正在加载中...' });
-      setTimeout(() => {
-        this.loading.close();
-      }, 3000);
+      // setTimeout(() => {
+      //   this.loading.close();
+      // }, 3000);
     },
     $_handleConfirm() {
       this.visibleDialog = !this.visibleDialog;
@@ -63,6 +70,11 @@ export default {
   width: 100%;
   .btn + .btn {
     margin-left: 40px;
+  }
+  .box {
+    width: 300px;
+    height: 300px;
+    background: rgba(0, 0, 0, 0.2);
   }
 }
 </style>

@@ -1,4 +1,9 @@
 const path = require('path');
+
+function resolve(dir) {
+  return path.join(__dirname, '.', dir);
+}
+
 module.exports = {
   // 打包后文件的引用路径
   publicPath: './',
@@ -35,5 +40,37 @@ module.exports = {
         }
       }
     }
+  },
+  // 插件配置
+  pluginOptions: {
+    svgSprite: {
+      dir: 'src/icons/svg/',
+      test: /\.(svg)(\?.*)?$/,
+      loaderOptions: {
+        extract: true,
+        spriteFilename: 'icons.[hash:8].svg' // or 'img/icons.svg' if filenameHashing == false
+      },
+      pluginOptions: {
+        plainSprite: true
+      }
+    }
+  },
+  // 用 configureWebpack 简单的配置；用 chainWebpack 做高级配置；包括对loader的添加，修改；以及插件的配置
+  chainWebpack: config => {
+    config.module.rules.delete('svg'); // 重点:删除默认配置中处理svg,
+    config.module
+      .rule('svg')
+      .exclude.add(resolve('src/icons'))
+      .end();
+    config.module
+      .rule('svg-sprite-loader')
+      .test(/\.svg$/)
+      .include.add(resolve('src/icons')) // 处理svg目录
+      .end()
+      .use('svg-sprite-loader')
+      .loader('svg-sprite-loader')
+      .options({
+        symbolId: 'icon-[name]'
+      });
   }
 };

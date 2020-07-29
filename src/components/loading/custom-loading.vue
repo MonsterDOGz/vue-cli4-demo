@@ -4,7 +4,10 @@
     <div v-show="visible" class="mask">
       <!--loading中间的图标-->
       <div class="spinner">
-        <i class="iconfont icon-loading1 iconLoading"></i>
+        <!-- <svg class="icon iconLoading" aria-hidden="true">
+          <use xlink:href="#icon-loading"></use>
+        </svg> -->
+        <svg-icon icon-class="loading" class-name="iconLoading"></svg-icon>
         <!--loading上面显示的文字-->
         <p class="text">{{ text }}</p>
       </div>
@@ -43,7 +46,7 @@ export default {
       font-size: 28px;
       display: inline-block;
       border-radius: 50%;
-      animation: clockwise 2s linear infinite;
+      animation: clockwise 1.5s linear infinite;
     }
     .text {
       color: #409EFF;

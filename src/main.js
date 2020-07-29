@@ -7,9 +7,9 @@ import './components/globalComponents/_globals.js'; // 引入全局注册组件
 import '@/styles/theme/index.css'; // 引入elementui自定义主题
 import '@/styles/elementui.css'; // 初始化elementui样式
 import ElementUI from 'element-ui';
-import '@/icons/iconfont/iconfont.css';
 import '@/styles/reset.css';
 import '@/styles/index.scss';
+import '@/icons/index.js';
 // import '@/utils/variables';
 import echarts from 'echarts';
 import api from '@/request/index.js';
