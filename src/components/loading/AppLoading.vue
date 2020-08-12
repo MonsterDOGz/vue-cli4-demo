@@ -7,7 +7,7 @@
         <!-- <svg class="icon iconLoading" aria-hidden="true">
           <use xlink:href="#icon-loading"></use>
         </svg> -->
-        <svg-icon icon-class="loading" class-name="iconLoading"></svg-icon>
+        <app-svg-icon icon-class="loading" class-name="iconLoading" />
         <!--loading上面显示的文字-->
         <p class="text">{{ text }}</p>
       </div>

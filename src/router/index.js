@@ -13,8 +13,8 @@ const constantRoutes = [
   },
   {
     path: '/test',
-    name: 'Test',
-    component: () => import('../views/test/index.vue')
+    name: 'the-test',
+    component: () => import('../views/test/TheTest.vue')
   },
   // 404页面需要放到最末尾,先行注册404界面,否则无法指向404界面会报错
   {

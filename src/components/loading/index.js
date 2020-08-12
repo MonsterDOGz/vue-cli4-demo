@@ -1,6 +1,6 @@
 // loading/index.js
 import Vue from 'vue';
-import LoadingComponent from './custom-loading.vue';
+import LoadingComponent from './AppLoading.vue';
 
 // 通过Vue.extend将组件包装成一个子类
 const LoadingConstructor = Vue.extend(LoadingComponent);
