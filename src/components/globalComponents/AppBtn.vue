@@ -1,7 +1,7 @@
 <template>
   <!-- 自定义按钮 -->
   <span class="btn" @click="$_click">
-    <slot></slot>
+    <slot>Submit</slot>
   </span>
 </template>
 

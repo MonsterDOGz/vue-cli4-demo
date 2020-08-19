@@ -19,6 +19,19 @@
     </the-test-one-room>
     <!-- 自定义指令 -->
     <div class="test_box" v-cLoading="cLoading"></div>
+    <the-test-attrs label="label" value="value" ok="ok" v-bind.sync="obj">
+      <template #default="scopedInfo">
+        {{ scopedInfo.info.sex }}
+      </template>
+    </the-test-attrs>
+    <app-btn @click="shuffle">Shuffle</app-btn>
+    <app-btn @click="addNum">add</app-btn>
+    <app-btn @click="remove">remove</app-btn>
+    <transition-group name="list-complete" tag="p">
+      <span v-for="item of arr" :key="item" class="list-complete-item">
+        {{ item }}
+      </span>
+    </transition-group>
   </div>
 </template>
 
@@ -26,14 +39,53 @@
 import TheTestOneRoom from './TheTestOneRoom';
 export default {
   components: {
-    TheTestOneRoom
+    TheTestOneRoom,
+    TheTestAttrs: {
+      template: `<div @click="$emit('update:a', 3)">
+      {{ label }}
+      {{ a }}
+      <slot name="default" :info="info"></slot>
+      <TheTestAttrsTwo v-bind="$attrs" />
+      </div>`,
+      inheritAttrs: false,
+      props: {
+        label: {
+          type: String
+        },
+        a: {
+          type: Number
+        }
+      },
+      components: {
+        TheTestAttrsTwo: {
+          template: `<div>{{ $attrs }}</div>`
+        }
+      },
+      data() {
+        return {
+          info: {
+            name: 'zhou',
+            sex: '男'
+          }
+        };
+      },
+      created() {
+        console.log(this.a);
+      }
+    }
   },
 
   data() {
     return {
       visibleDialog: false,
       loading: false,
-      cLoading: false
+      cLoading: false,
+      obj: {
+        a: 1,
+        b: 2
+      },
+      arr: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      nextNum: 10
     };
   },
 
@@ -79,6 +131,7 @@ export default {
     },
 
     async sum(...rest) {
+      console.log(rest);
       if (rest.length <= 1) {
         return rest[0] || 0;
       }
@@ -96,7 +149,7 @@ export default {
           })
         );
       }
-      const result = await Promise.all(promises);
+      var result = await Promise.all(promises);
       // eslint-disable-next-line no-return-await
       return await this.sum(...result);
     },
@@ -108,6 +161,22 @@ export default {
         console.log(res);
         console.log(`程序执行共耗时: ${window.performance.now() - start}`);
       });
+    },
+
+    addNum() {
+      this.arr.splice(this.randomIndex(), 0, this.nextNum++);
+    },
+
+    remove: function() {
+      this.arr.splice(this.randomIndex(), 1);
+    },
+
+    randomIndex: function() {
+      return Math.floor(Math.random() * this.arr.length);
+    },
+
+    shuffle: function () {
+      this.arr = _.shuffle(this.arr);
     }
   }
 };
@@ -123,6 +192,19 @@ export default {
     width: 300px;
     height: 300px;
     background: rgba(0, 0, 0, 0.2);
+  }
+  .list-complete-item {
+    transition: all 1s;
+    display: inline-block;
+    margin-right: 10px;
+  }
+  .list-complete-enter, .list-complete-leave-to
+  /* .list-complete-leave-active for below version 2.1.8 */ {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  .list-complete-leave-active {
+    position: absolute;
   }
 }
 </style>

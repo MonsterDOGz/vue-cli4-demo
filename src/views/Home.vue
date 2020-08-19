@@ -6,13 +6,12 @@
 </template>
 
 <script>
-// import AppPdf from '@/components/AppPdf';
+import AppPdf from '@/components/AppPdf';
 export default {
   name: 'home',
-  // components: {
-  //   customBtn,
-  //   AppPdf
-  // },
+  components: {
+    AppPdf
+  },
   data() {
     return {
       pdfBox: false,
