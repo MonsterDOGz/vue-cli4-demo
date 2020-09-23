@@ -13,10 +13,12 @@ import echarts from 'echarts';
 import api from '@/request/index.js';
 import { init, bind } from './utils/custom-life-cycle'; // 自定义生命周期
 import cLoading from '@/components/loading/index.js'; // 自定义loading指令
+import previewImg from 'yfd-preview-img';
 init();
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
+Vue.use(previewImg);
 
 // 声明全局属性
 Object.assign(Vue.prototype, {
