@@ -3,7 +3,6 @@
     <app-btn @click.native="pdfBox = true">打开pdf</app-btn>
     <app-pdf v-if="pdfBox" :pdf-url="pdfUrl" @toFatherClosePdf="pdfBox = false" />
     <app-btn @click.native="$refs.previewImg.$_show()">打开图片</app-btn>
-    <previewImg :images="images" ref="previewImg"></previewImg>
   </div>
 </template>
 

@@ -12,7 +12,6 @@ console.log(process.env.NODE_ENV);
 //   axios.defaults.baseURL = 'https://ddev.homedone.net'
 // }
 
-console.info(location.hostname);
 if (location.hostname === ('192.168.10.72' || 'localhost')) {
   axios.defaults.baseURL = '/api/yifd';
 } else {
