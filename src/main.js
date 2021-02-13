@@ -1,3 +1,11 @@
+/*
+ * @Author: MonsterDOG
+ * @Date: 2020-07-09 09:25:41
+ * @LastEditors: MonsterDOG
+ * @LastEditTime: 2021-02-01 13:34:47
+ * @FilePath: /vue-cli4-demo/src/main.js
+ * @Description: 【描述】
+ */
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
@@ -9,10 +17,10 @@ import ElementUI from 'element-ui';
 import '@/styles/reset.css';
 import '@/styles/index.scss';
 import '@/icons/index.js';
-import echarts from 'echarts';
 import api from '@/request/index.js';
 import { init, bind } from './utils/custom-life-cycle'; // 自定义生命周期
 import cLoading from '@/components/loading/index.js'; // 自定义loading指令
+import echarts from './echarts.js';
 init();
 
 Vue.config.productionTip = false;
@@ -21,9 +29,9 @@ Vue.use(ElementUI);
 // 声明全局属性
 Object.assign(Vue.prototype, {
   $api: api,
-  $echarts: echarts,
   _: require('lodash'),
-  $cLoading: cLoading
+  $cLoading: cLoading,
+  $echarts: echarts
 });
 
 const vm = new Vue({
