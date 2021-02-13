@@ -3,15 +3,18 @@
     <app-btn @click.native="pdfBox = true">打开pdf</app-btn>
     <app-pdf v-if="pdfBox" :pdf-url="pdfUrl" @toFatherClosePdf="pdfBox = false" />
     <app-btn @click.native="$refs.previewImg.$_show()">打开图片</app-btn>
+    <CyberButton />
   </div>
 </template>
 
 <script>
 import AppPdf from '@/components/AppPdf';
+import CyberButton from '@/components/CyberButton.vue';
 export default {
   name: 'home',
   components: {
-    AppPdf
+    AppPdf,
+    CyberButton
   },
   data() {
     return {
@@ -27,4 +30,5 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>
