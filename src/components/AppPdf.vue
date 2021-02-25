@@ -1,18 +1,12 @@
 <!-- 此预览pdf组件需要需要引入到目标组件中使用 -->
 <!-- 例如"import previewImg from '@/components/pdf.vue'" -->
 <!-- html中使用<pdf v-if="pdfBox" :pdfUrl="pdfUrl" v-on:toFatherClosePdf="pdfBox = false"></pdf>，url是传入的数据，详情见下 -->
-<!-- 需要引入@/mixin/base.js中的previewMixin -->
 <template>
   <div class="pdf">
     <div class="pdfBox">
-      <canvas
-        v-for="page in pages"
-        :id="'the-canvas' + page"
-        :key="page"
-      ></canvas>
+      <canvas v-for="page in pages" :id="'the-canvas' + page" :key="page"></canvas>
     </div>
-    <div class="previewClose"
-         @click="open">
+    <div class="previewClose" @click="open">
       <i class="iconfont iconquxiao close"></i>
     </div>
   </div>
@@ -24,12 +18,12 @@ var CMAP_URL = 'https://unpkg.com/pdfjs-dist@2.0.943/cmaps/';
 // pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.js`;
 export default {
   /**
-  * 从父组件传入pdf信息，以对象形式传入，必须包含url字段，目前只能预览一张pdf
-  * eg:
-  * pdfUrl: {
-  *   url: 'https://xitianqujing.oss-cn-hangzhou.aliyuncs.com/001213d1ebcd497e96aacd07c622cc75.pdf'
-  * }
-  */
+   * 从父组件传入pdf信息，以对象形式传入，必须包含url字段，目前只能预览一张pdf
+   * eg:
+   * pdfUrl: {
+   *   url: 'https://xitianqujing.oss-cn-hangzhou.aliyuncs.com/001213d1ebcd497e96aacd07c622cc75.pdf'
+   * }
+   */
   props: {
     pdfUrl: {
       type: Object,
@@ -39,17 +33,17 @@ export default {
       }
     }
   },
-  data () {
+  data() {
     return {
       pages: [],
       pdfDoc: ''
     };
   },
   methods: {
-    open () {
+    open() {
       this.$emit('toFatherClosePdf');
     },
-    _renderPage (num) {
+    _renderPage(num) {
       this.pdfDoc.getPage(num).then(page => {
         let canvas = document.getElementById('the-canvas' + num);
         let ctx = canvas.getContext('2d');
@@ -81,7 +75,7 @@ export default {
         this.$emit('toFather');
       });
     },
-    _loadFile (url) {
+    _loadFile(url) {
       var pdfInfo = {
         url: url,
         cMapUrl: CMAP_URL,
@@ -97,7 +91,7 @@ export default {
       });
     }
   },
-  created () {
+  created() {
     this._loadFile(this.pdfUrl.url);
   }
 };
