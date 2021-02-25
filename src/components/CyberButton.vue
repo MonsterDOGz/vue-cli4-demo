@@ -2,14 +2,12 @@
  * @Author: MonsterDOG
  * @Date: 2021-01-07 23:14:22
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-01-09 15:20:19
+ * @LastEditTime: 2021-02-25 11:11:36
  * @FilePath: /vue-cli4-demo/src/components/CyberButton.vue
  * @Description: 【描述】
 -->
 <template>
-  <div class="box">
-    <button class="cyber-button">Cyber Punk</button>
-  </div>
+  <button class="cyber-button">Cyber Punk</button>
 </template>
 
 <script>
@@ -18,13 +16,6 @@ export default {};
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap');
-.box {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f8f005;
-}
 .cyber-button,
 .cyber-button::after {
   font-family: 'East Sea Dokdo', cursive;

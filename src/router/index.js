@@ -2,7 +2,7 @@
  * @Author: MonsterDOG
  * @Date: 2020-03-21 11:05:09
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-02-01 11:39:41
+ * @LastEditTime: 2021-02-25 11:09:18
  * @FilePath: /vue-cli4-demo/src/router/index.js
  * @Description: 【描述】
  */
@@ -23,6 +23,11 @@ const constantRoutes = [
     path: '/test',
     name: 'the-test',
     component: () => import('../views/test/TheTest.vue')
+  },
+  {
+    path: '/cyberpunk',
+    name: 'Cyberpunk',
+    component: () => import('../views/cyberpunk/index.vue')
   },
   {
     path: '/echarts',

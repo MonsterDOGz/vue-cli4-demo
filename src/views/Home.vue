@@ -2,29 +2,27 @@
  * @Author: MonsterDOG
  * @Date: 2020-11-25 17:53:45
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-02-13 21:21:50
+ * @LastEditTime: 2021-02-25 11:19:16
  * @FilePath: /vue-cli4-demo/src/views/Home.vue
  * @Description: 【描述】
 -->
 <template>
   <div class="home">
-    <app-btn @click.native="pdfBox = true">打开pdf</app-btn>
+    <app-btn @click="pdfBox = true">打开pdf</app-btn>
     <app-pdf v-if="pdfBox" :pdf-url="pdfUrl" @toFatherClosePdf="pdfBox = false" />
-    <app-btn @click.native="$refs.previewImg.$_show()">打开图片</app-btn>
-    <CyberButton />
-    <app-btn @click.native="$router.push({ path: '/echarts' })">open echarts</app-btn>
+    <app-btn @click="$refs.previewImg.$_show()">打开图片</app-btn>
+    <app-btn @click="$router.push({ path: '/cyberpunk' })">cyberpunk</app-btn>
+    <app-btn @click="$router.push({ path: '/echarts' })">open echarts</app-btn>
   </div>
 </template>
 
 <script>
 import AppPdf from '@/components/AppPdf';
-import CyberButton from '@/components/CyberButton.vue';
 import AppBtn from '../components/globalComponents/AppBtn.vue';
 export default {
   name: 'home',
   components: {
     AppPdf,
-    CyberButton,
     AppBtn
   },
   data() {
