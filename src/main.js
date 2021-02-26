@@ -2,7 +2,7 @@
  * @Author: MonsterDOG
  * @Date: 2020-07-09 09:25:41
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-02-26 09:49:24
+ * @LastEditTime: 2021-02-26 16:26:41
  * @FilePath: /vue-cli4-demo/src/main.js
  * @Description: 【描述】
  */
@@ -26,7 +26,7 @@ import './components/globalComponents/_globals.js'; // 引入全局注册组件
 import '@/icons/index.js';
 // import api from '@/request/index.js';
 import cLoading from '@/components/loading/index.js'; // 自定义loading指令
-import echarts from './echarts.js';
+import echarts from '@/utils/echarts.js';
 
 import { init, bind } from './utils/custom-life-cycle'; // 自定义生命周期
 init();
