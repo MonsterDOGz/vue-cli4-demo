@@ -1,3 +1,11 @@
+<!--
+ * @Author: MonsterDOG
+ * @Date: 2020-07-31 18:15:05
+ * @LastEditors: MonsterDOG
+ * @LastEditTime: 2021-02-26 11:09:56
+ * @FilePath: /vue-cli4-demo/src/components/loading/AppLoading.vue
+ * @Description: 【描述】
+-->
 <template>
   <transition name="fade">
     <!--loading蒙版-->
@@ -7,7 +15,7 @@
         <!-- <svg class="icon iconLoading" aria-hidden="true">
           <use xlink:href="#icon-loading"></use>
         </svg> -->
-        <app-svg-icon icon-class="loading" class-name="iconLoading" />
+        <svg-icon icon-class="loading" class-name="iconLoading" />
         <!--loading上面显示的文字-->
         <p class="text">{{ text }}</p>
       </div>
@@ -35,7 +43,7 @@ export default {
   z-index: 1000;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, .8);
+  background: rgba(0, 0, 0, 0.8);
   .spinner {
     position: absolute;
     top: 50%;
@@ -43,22 +51,24 @@ export default {
     transform: translate(-50%, -50%);
     text-align: center;
     .iconLoading {
-      color: #409EFF;
+      color: #409eff;
       font-size: 28px;
       display: inline-block;
       border-radius: 50%;
       animation: clockwise 1.5s linear infinite;
     }
     .text {
-      color: #409EFF;
+      color: #409eff;
       margin-top: 16px;
     }
   }
 }
-.fade-enter-active, .fade-leave-active {
-  transition: .3s;
+.fade-enter-active,
+.fade-leave-active {
+  transition: 0.3s;
 }
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
   transform: translateY(-6px);
 }

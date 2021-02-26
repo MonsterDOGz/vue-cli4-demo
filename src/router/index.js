@@ -1,64 +1,123 @@
-/*
- * @Author: MonsterDOG
- * @Date: 2020-03-21 11:05:09
- * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-02-25 11:09:18
- * @FilePath: /vue-cli4-demo/src/router/index.js
- * @Description: 【描述】
- */
 import Vue from 'vue';
-import VueRouter from 'vue-router';
+import Router from 'vue-router';
 
-Vue.use(VueRouter);
+/* Layout */
+import Layout from '@/layout';
 
-const constantRoutes = [
+Vue.use(Router);
+
+/**
+ * Note: sub-menu only appear when route children.length >= 1
+ * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
+ *
+ * hidden: true                   if set true, item will not show in the sidebar(default is false)
+ * alwaysShow: true               if set true, will always show the root menu
+ *                                if not set alwaysShow, when item has more than one children route,
+ *                                it will becomes nested mode, otherwise not show the root menu
+ * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
+ * name:'router-name'             the name is used by <keep-alive> (must set!!!)
+ * meta : {
+    roles: ['admin','editor']    control the page roles (you can set multiple roles)
+    title: 'title'               the name show in sidebar and breadcrumb (recommend set)
+    icon: 'svg-name'/'el-icon-x' the icon show in the sidebar
+    breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
+    activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
+  }
+ */
+
+/**
+ * constantRoutes
+ * a base page that does not have permission requirements
+ * all roles can be accessed
+ */
+export const constantRoutes = [
   {
-    path: '/',
-    name: 'home',
-    hidden: true,
-    component: () => import('../views/Home'),
-    meta: { title: '首页' }
+    path: '/login',
+    component: () => import('@/views/login/index'),
+    hidden: true
   },
-  {
-    path: '/test',
-    name: 'the-test',
-    component: () => import('../views/test/TheTest.vue')
-  },
-  {
-    path: '/cyberpunk',
-    name: 'Cyberpunk',
-    component: () => import('../views/cyberpunk/index.vue')
-  },
-  {
-    path: '/echarts',
-    name: 'Echarts',
-    component: () => import('../views/echarts/index.vue')
-  },
-  // 404页面需要放到最末尾,先行注册404界面,否则无法指向404界面会报错
+
   {
     path: '/404',
-    name: 'page404',
-    hidden: true,
-    component: () => import('../views/404'),
-    meta: { title: '404' }
+    component: () => import('@/views/404/index'),
+    hidden: true
   },
-  // 指向页面错误跳转到404
+
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/home',
+    children: [{
+      path: 'home',
+      name: '首页',
+      component: () => import('@/views/Home'),
+      meta: { title: '首页', icon: 'dashboard' }
+    }]
+  },
+
+  {
+    path: '/echarts',
+    component: Layout,
+    redirect: '/echarts/echarts1',
+    name: 'Echarts',
+    meta: { title: 'Echarts', icon: 'el-icon-pie-chart' },
+    children: [
+      {
+        path: 'echarts1',
+        name: 'Echarts1',
+        component: () => import('@/views/echarts/index'),
+        meta: { title: 'Echarts1', icon: 'table' }
+      },
+      {
+        path: 'echarts2',
+        name: 'Echarts2',
+        component: () => import('@/views/echarts/index2/index'),
+        meta: { title: 'Echarts2', icon: 'tree' }
+      }
+    ]
+  },
+
+  {
+    path: '/cyberpunk',
+    component: Layout,
+    redirect: '/cyberpunk/cyberpunk',
+    children: [
+      {
+        path: 'cyberpunk',
+        name: 'Cyberpunk',
+        component: () => import('@/views/cyberpunk/index'),
+        meta: { title: 'Cyberpunk', icon: 'cyberpunk' }
+      }
+    ]
+  },
+
+  {
+    path: '/external-link',
+    component: Layout,
+    children: [
+      {
+        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+        meta: { title: 'External Link', icon: 'link' }
+      }
+    ]
+  },
+
+  // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ];
 
-// 创建一个vue-router 并且每次切换页面都调整滚动条的高度,并且存入固定路由界面
-const createRouter = () =>
-  new VueRouter({
-    scrollBehavior: () => ({ y: 0 }),
-    routes: constantRoutes
-  });
-// };
+const createRouter = () => new Router({
+  // mode: 'history', // require service support
+  scrollBehavior: () => ({ y: 0 }),
+  routes: constantRoutes
+});
 
-// 重置路由方法
+const router = createRouter();
+
+// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
   const newRouter = createRouter();
   router.matcher = newRouter.matcher; // reset router
 }
 
-const router = createRouter();
 export default router;

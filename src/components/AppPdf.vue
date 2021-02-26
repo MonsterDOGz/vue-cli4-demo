@@ -1,81 +1,77 @@
-<!-- 此预览pdf组件需要需要引入到目标组件中使用 -->
-<!-- 例如"import previewImg from '@/components/pdf.vue'" -->
-<!-- html中使用<pdf v-if="pdfBox" :pdfUrl="pdfUrl" v-on:toFatherClosePdf="pdfBox = false"></pdf>，url是传入的数据，详情见下 -->
+<!--
+  * @Author：xiaolong
+  * @Date: 2020
+ * @LastEditors: MonsterDOG
+ * @LastEditTime: 2021-02-26 15:58:24
+  * @Description: pdf预览，只能预览，不支持缩放、翻页等功能
+-->
 <template>
   <div class="pdf">
-    <div class="pdfBox">
+    <div class="pdf_box" v-loading="pdfLoading" element-loading-text="拼命加载中...">
       <canvas v-for="page in pages" :id="'the-canvas' + page" :key="page"></canvas>
     </div>
-    <div class="previewClose" @click="open">
-      <i class="iconfont iconquxiao close"></i>
+    <div class="pdf_close" @click="$_closePdfBox">
+      <i class="iconfont iconquxiao pdf_close-icon"></i>
     </div>
   </div>
 </template>
 
 <script>
-import pdfjsLib from 'pdfjs-dist';
-var CMAP_URL = 'https://unpkg.com/pdfjs-dist@2.0.943/cmaps/';
-// pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.js`;
+import { pdfjsLib, CMAP_URL } from '@/utils/pdfjs.js';
 export default {
-  /**
-   * 从父组件传入pdf信息，以对象形式传入，必须包含url字段，目前只能预览一张pdf
-   * eg:
-   * pdfUrl: {
-   *   url: 'https://xitianqujing.oss-cn-hangzhou.aliyuncs.com/001213d1ebcd497e96aacd07c622cc75.pdf'
-   * }
-   */
   props: {
     pdfUrl: {
       type: Object,
       required: true,
       default: () => {
-        return { message: 'hello' };
+        return { message: 'error' };
       }
     }
   },
   data() {
     return {
       pages: [],
-      pdfDoc: ''
+      pdfDoc: '',
+      pdfLoading: '' // pdf加载Loading
     };
   },
+  created() {
+    this.$_loadFile(this.pdfUrl.url);
+  },
+  mounted() {
+    document.body.style.cssText = `overflow: hidden; padding-right: ${
+      window.innerWidth - document.body.clientWidth
+    }px`;
+    this.$once('hook:beforeDestroy', () => {
+      document.body.style.cssText = 'overflow: visiable';
+    });
+  },
   methods: {
-    open() {
-      this.$emit('toFatherClosePdf');
-    },
-    _renderPage(num) {
+    $_renderPage(num) {
       this.pdfDoc.getPage(num).then(page => {
-        let canvas = document.getElementById('the-canvas' + num);
-        let ctx = canvas.getContext('2d');
-        let dpr = window.devicePixelRatio || 1;
-        let bsr =
-          ctx.webkitBackingStorePixelRatio ||
-          ctx.mozBackingStorePixelRatio ||
-          ctx.msBackingStorePixelRatio ||
-          ctx.oBackingStorePixelRatio ||
-          ctx.backingStorePixelRatio ||
-          1;
-        let ratio = dpr / bsr;
-        let viewport = page.getViewport({
+        const canvas = document.getElementById('the-canvas' + num);
+        const ctx = canvas.getContext('2d');
+        const viewport = page.getViewport({
           scale: 900 / page.getViewport({ scale: 1 }).width
         });
-        canvas.width = viewport.width * ratio;
-        canvas.height = viewport.height * ratio;
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
         canvas.style.width = viewport.width + 'px';
         canvas.style.height = viewport.height + 'px';
-        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-        let renderContext = {
+        const renderContext = {
           canvasContext: ctx,
           viewport: viewport
         };
         page.render(renderContext);
+        this.pdfLoading = false; // 关闭pdfLoading效果
         if (this.pages > num) {
-          this._renderPage(num + 1);
+          this.$_renderPage(num + 1);
         }
         this.$emit('toFather');
       });
     },
-    _loadFile(url) {
+    $_loadFile(url) {
+      this.pdfLoading = true; // 打开pdfLoading效果
       var pdfInfo = {
         url: url,
         cMapUrl: CMAP_URL,
@@ -86,13 +82,13 @@ export default {
         this.pdfDoc = pdf;
         this.pages = this.pdfDoc.numPages;
         this.$nextTick(() => {
-          this._renderPage(1);
+          this.$_renderPage(1);
         });
       });
+    },
+    $_closePdfBox() {
+      this.$emit('toFatherClosePdf');
     }
-  },
-  created() {
-    this._loadFile(this.pdfUrl.url);
   }
 };
 </script>
@@ -101,12 +97,13 @@ export default {
 .pdf {
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.5);
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
-  .pdfBox {
+
+  .pdf_box {
     width: 900px;
     height: 90vh;
     overflow-y: auto;
@@ -115,27 +112,35 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
   }
-  .previewClose {
-    background-color: rgba(0, 0, 0, 0.3);
-    width: 160px;
-    height: 160px;
+
+  .pdf_close {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     position: absolute;
-    top: -80px;
-    right: -80px;
+    top: -50px;
+    right: -50px;
     cursor: pointer;
-    transition: 0.2s;
-    .close {
-      line-height: 50px;
-      font-size: 50px;
+    transition: 0.15s;
+
+    .pdf_close-icon {
+      font-size: 22px;
       position: absolute;
-      top: 55%;
-      left: 15%;
-      color: #fff;
+      left: 30%;
+      bottom: 30%;
+      transform: translate(-50%, 50%);
+      color: #ccc;
+      font-weight: bold;
     }
   }
-  .previewClose:hover {
-    background-color: rgba(0, 0, 0, 0.7);
+
+  .pdf_close:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+
+    .pdf_close-icon {
+      color: #fff;
+    }
   }
 }
 </style>

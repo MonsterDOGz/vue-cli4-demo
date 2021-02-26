@@ -1,3 +1,11 @@
+/*
+ * @Author: MonsterDOG
+ * @Date: 2020-03-21 11:05:09
+ * @LastEditors: MonsterDOG
+ * @LastEditTime: 2021-02-26 16:14:47
+ * @FilePath: /vue-cli4-demo/src/store/index.js
+ * @Description: 【描述】
+ */
 import Vue from 'vue';
 import Vuex from 'vuex';
 import getters from './getters';
@@ -5,12 +13,12 @@ import getters from './getters';
 Vue.use(Vuex);
 
 // 获取 ./modules文件夹下面所有的js文件名称
-const modulesFiles = require.context('./modules', true, /\.js$/);
+const modulesFiles = require.context('./modules', true, /.js$/);
 
 // you do not need `import app from './modules/app'`
 // it will auto require all vuex module from modules file
 const modules = modulesFiles.keys().reduce((arr, modulePath) => {
-  // set './app.js' => 'app'
+  //   // set './app.js' => 'app'
   const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1');
   const value = modulesFiles(modulePath);
   arr[moduleName] = value.default;

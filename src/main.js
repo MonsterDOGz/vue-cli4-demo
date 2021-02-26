@@ -2,7 +2,7 @@
  * @Author: MonsterDOG
  * @Date: 2020-07-09 09:25:41
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-02-25 17:55:01
+ * @LastEditTime: 2021-02-26 09:49:24
  * @FilePath: /vue-cli4-demo/src/main.js
  * @Description: 【描述】
  */
@@ -24,7 +24,7 @@ import '@/permission'; // permission control
 import '@/filter'; // 引入全局过滤器
 import './components/globalComponents/_globals.js'; // 引入全局注册组件
 import '@/icons/index.js';
-import api from '@/request/index.js';
+// import api from '@/request/index.js';
 import cLoading from '@/components/loading/index.js'; // 自定义loading指令
 import echarts from './echarts.js';
 
@@ -39,7 +39,7 @@ init();
  * Currently MockJs will be used in the production environment,
  * please remove it before going online ! ! !
  */
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'development') {
   const { mockXHR } = require('../mock');
   mockXHR();
 }
@@ -49,7 +49,7 @@ Vue.use(ElementUI);
 
 // 声明全局属性
 Object.assign(Vue.prototype, {
-  $api: api,
+  // $api: api,
   _: require('lodash'),
   $cLoading: cLoading,
   $echarts: echarts

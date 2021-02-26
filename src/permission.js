@@ -1,3 +1,11 @@
+/*
+ * @Author: MonsterDOG
+ * @Date: 2021-02-25 17:49:51
+ * @LastEditors: MonsterDOG
+ * @LastEditTime: 2021-02-26 10:01:33
+ * @FilePath: /vue-cli4-demo/src/permission.js
+ * @Description: 【描述】
+ */
 import router from './router';
 import store from './store';
 import { Message } from 'element-ui';

@@ -2,7 +2,7 @@
  * @Author: MonsterDOG
  * @Date: 2021-02-25 11:06:10
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-02-25 11:19:04
+ * @LastEditTime: 2021-02-26 15:03:50
  * @FilePath: /vue-cli4-demo/src/views/cyberpunk/index.vue
  * @Description: 【描述】
 -->
@@ -22,9 +22,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~@/styles/variables.scss';
+
 .cyberpunk-box {
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - #{$navBarHeight});
   display: flex;
   justify-content: center;
   align-items: center;

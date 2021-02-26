@@ -2,7 +2,7 @@
  * @Author: MonsterDOG
  * @Date: 2020-11-25 17:53:45
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-02-25 11:19:16
+ * @LastEditTime: 2021-02-26 15:06:02
  * @FilePath: /vue-cli4-demo/src/views/Home.vue
  * @Description: 【描述】
 -->
@@ -38,4 +38,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.home {
+  padding: 20px;
+}
 </style>

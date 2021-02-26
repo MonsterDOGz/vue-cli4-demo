@@ -2,7 +2,7 @@
  * @Author: MonsterDOG
  * @Date: 2021-02-25 17:27:31
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-02-25 17:59:15
+ * @LastEditTime: 2021-02-26 16:15:41
  * @FilePath: /vue-cli4-demo/src/store/modules/user.js
  * @Description: 【描述】
  */
@@ -64,8 +64,7 @@ const actions = {
 
         const { name, avatar } = data;
 
-        // commit('SET_NAME', name);
-        commit('SET_NAME', 'MonsterDOG');
+        commit('SET_NAME', name);
         commit('SET_AVATAR', avatar);
         resolve(data);
       }).catch(error => {
