@@ -2,7 +2,7 @@
  * @Author: MonsterDOG
  * @Date: 2021-02-26 15:29:20
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-02-26 15:57:57
+ * @LastEditTime: 2021-03-01 10:34:21
  * @FilePath: /vue-cli4-demo/src/utils/pdfjs.js
  * @Description: 【描述】pdfjs 插件配置
  */
