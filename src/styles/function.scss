@@ -1,28 +1,14 @@
 // scss 全局函数写入
 
 // px 转换成 rem
-@function px2rem ($size) {
-  @return ($size / 50)
-};
+@function px2rem($size) {
+  @return ($size / 50);
+}
 
 // 字体溢出显示省略号
-@function noWrap () {
-  @return (
-    text-overflow ellipsis
-    overflow hidden
-    white-space nowrap
-  )
-};
-
-// 清除浮动
-@function clear () {
-  @return (
-    clear both
-    content ' '
-    display block
-    visibility hidden
-  )
-};
+@function noWrap() {
+  @return (text-overflow ellipsis overflow hidden white-space nowrap);
+}
 
 // 旋转动画
 @keyframes clockwise {

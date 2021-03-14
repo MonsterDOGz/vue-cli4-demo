@@ -1,3 +1,11 @@
+/*
+ * @Author: MonsterDOG
+ * @Date: 2020-05-13 21:11:46
+ * @LastEditors: MonsterDOG
+ * @LastEditTime: 2021-03-14 16:10:45
+ * @FilePath: /vue-cli4-demo/.prettierrc.js
+ * @Description: 【描述】
+ */
 // 需配合prettier插件使用
 // 在设置>文本编辑器>正在格式化>选择保存时格式化
 module.exports = {

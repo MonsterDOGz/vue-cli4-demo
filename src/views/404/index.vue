@@ -8,10 +8,17 @@
         <img class="pic-404__child right" src="@/assets/404_images/404_cloud.png" alt="404" />
       </div>
       <div class="bullshit">
-        <div class="bullshit__oops">哎呀!出错了</div>
+        <div class="bullshit__oops">OOPS!</div>
+        <div class="bullshit__info">
+          All rights reserved
+          <a style="color: #20a0ff" href="https://wallstreetcn.com" target="_blank">wallstreetcn</a>
+        </div>
         <div class="bullshit__headline">{{ message }}</div>
-        <div class="bullshit__info">请检查您输入的URL是否正确，或者单击下面的按钮返回主页</div>
-        <a href="" class="bullshit__return-home">回到主页</a>
+        <div class="bullshit__info">
+          Please check that the URL you entered is correct, or click the button below to return to
+          the homepage.
+        </div>
+        <a href="" class="bullshit__return-home">Back to home</a>
       </div>
     </div>
   </div>
@@ -19,10 +26,10 @@
 
 <script>
 export default {
-  name: 'page404',
+  name: 'Page404',
   computed: {
     message() {
-      return `您输入的页面暂不存在...`;
+      return 'The webmaster said that you can not enter this page...';
     }
   }
 };
@@ -37,13 +44,13 @@ export default {
 }
 .wscn-http404 {
   position: relative;
-  width: px2rem(1200rem);
-  padding: 0 px2rem(50rem);
+  width: 1200px;
+  padding: 0 50px;
   overflow: hidden;
   .pic-404 {
     position: relative;
     float: left;
-    width: px2rem(600rem);
+    width: 600px;
     overflow: hidden;
     &__parent {
       width: 100%;
@@ -51,104 +58,101 @@ export default {
     &__child {
       position: absolute;
       &.left {
-        width: px2rem(80rem);
-        top: px2rem(17rem);
-        left: px2rem(220rem);
+        width: 80px;
+        top: 17px;
+        left: 220px;
         opacity: 0;
         animation-name: cloudLeft;
         animation-duration: 2s;
-        animation-iteration-count: infinite;
         animation-timing-function: linear;
         animation-fill-mode: forwards;
         animation-delay: 1s;
       }
       &.mid {
-        width: px2rem(46rem);
-        top: px2rem(10rem);
-        left: px2rem(420rem);
+        width: 46px;
+        top: 10px;
+        left: 420px;
         opacity: 0;
         animation-name: cloudMid;
         animation-duration: 2s;
-        animation-iteration-count: infinite;
         animation-timing-function: linear;
         animation-fill-mode: forwards;
         animation-delay: 1.2s;
       }
       &.right {
-        width: px2rem(62rem);
-        top: px2rem(100rem);
-        left: px2rem(500rem);
+        width: 62px;
+        top: 100px;
+        left: 500px;
         opacity: 0;
         animation-name: cloudRight;
         animation-duration: 2s;
-        animation-iteration-count: infinite;
         animation-timing-function: linear;
         animation-fill-mode: forwards;
         animation-delay: 1s;
       }
       @keyframes cloudLeft {
         0% {
-          top: px2rem(17rem);
-          left: px2rem(220rem);
+          top: 17px;
+          left: 220px;
           opacity: 0;
         }
         20% {
-          top: px2rem(33rem);
-          left: px2rem(188rem);
+          top: 33px;
+          left: 188px;
           opacity: 1;
         }
         80% {
-          top: px2rem(81rem);
-          left: px2rem(92rem);
+          top: 81px;
+          left: 92px;
           opacity: 1;
         }
         100% {
-          top: px2rem(97rem);
-          left: px2rem(60rem);
+          top: 97px;
+          left: 60px;
           opacity: 0;
         }
       }
       @keyframes cloudMid {
         0% {
-          top: px2rem(10rem);
-          left: px2rem(420rem);
+          top: 10px;
+          left: 420px;
           opacity: 0;
         }
         20% {
-          top: px2rem(40rem);
-          left: px2rem(360rem);
+          top: 40px;
+          left: 360px;
           opacity: 1;
         }
         70% {
-          top: px2rem(130rem);
-          left: px2rem(180rem);
+          top: 130px;
+          left: 180px;
           opacity: 1;
         }
         100% {
-          top: px2rem(160rem);
-          left: px2rem(120rem);
+          top: 160px;
+          left: 120px;
           opacity: 0;
         }
       }
       @keyframes cloudRight {
         0% {
-          top: px2rem(100rem);
-          left: px2rem(500rem);
+          top: 100px;
+          left: 500px;
           opacity: 0;
         }
         20% {
-          top: px2rem(120rem);
-          left: px2rem(460rem);
+          top: 120px;
+          left: 460px;
           opacity: 1;
         }
         80% {
-          top: px2rem(180rem);
-          left: px2rem(340rem);
+          top: 180px;
+          left: 340px;
           opacity: 1;
         }
         100% {
-          top: px2rem(200rem);
-          left: px2rem(300rem);
+          top: 200px;
+          left: 300px;
           opacity: 0;
         }
       }

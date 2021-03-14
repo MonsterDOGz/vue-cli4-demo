@@ -2,7 +2,7 @@
  * @Author: MonsterDOG
  * @Date: 2020-11-25 20:28:33
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-03-13 14:39:14
+ * @LastEditTime: 2021-03-14 15:24:15
  * @FilePath: /vue-cli4-demo/vue.config.js
  * @Description: 【描述】
  */
@@ -76,6 +76,19 @@ module.exports = {
   },
   // 用 configureWebpack 简单的配置；用 chainWebpack 做高级配置；包括对loader的添加，修改；以及插件的配置
   chainWebpack: config => {
+    // 可以提高第一屏的速度，建议开启预加载
+    config.plugin('preload').tap(() => [
+      {
+        rel: 'preload',
+        // to ignore runtime.js
+        // https://github.com/vuejs/vue-cli/blob/dev/packages/@vue/cli-service/lib/config/app.js#L171
+        fileBlacklist: [/\.map$/, /hot-update\.js$/, /runtime\..*\.js$/],
+        include: 'initial'
+      }
+    ]);
+    // 当页面很多时，会导致太多无意义的请求
+    config.plugins.delete('prefetch');
+
     config.module.rules.delete('svg'); // 重点:删除默认配置中处理svg,
     config.module
       .rule('svg')
@@ -90,6 +103,47 @@ module.exports = {
       .loader('svg-sprite-loader')
       .options({
         symbolId: 'icon-[name]'
-      });
+      })
+      .end();
+
+    config
+      .when(process.env.NODE_ENV !== 'development',
+        config => {
+          config
+            .plugin('ScriptExtHtmlWebpackPlugin')
+            .after('html')
+            .use('script-ext-html-webpack-plugin', [{
+            // 'runtime'必须与 runtimecchunk 的 name 相同。默认是 'runtime'
+              inline: /runtime\..*\.js$/
+            }])
+            .end();
+          config
+            .optimization.splitChunks({
+              chunks: 'all',
+              cacheGroups: {
+                libs: {
+                  name: 'chunk-libs',
+                  test: /[\\/]node_modules[\\/]/,
+                  priority: 10,
+                  chunks: 'initial' // 只打包最初依赖的第三方
+                },
+                elementUI: {
+                  name: 'chunk-elementUI', // 将 elementUI 拆分为单个包
+                  priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
+                  test: /[\\/]node_modules[\\/]_?element-ui(.*)/ // 为了适应 cnpm
+                },
+                commons: {
+                  name: 'chunk-commons',
+                  test: resolve('src/components'), // 可以自定义规则
+                  minChunks: 3, // 最低常见的数量
+                  priority: 5,
+                  reuseExistingChunk: true
+                }
+              }
+            });
+          // https:// webpack.js.org/configuration/optimization/#optimizationruntimechunk
+          config.optimization.runtimeChunk('single');
+        }
+      );
   }
 };
