@@ -2,11 +2,11 @@
  * @Author: MonsterDOG
  * @Date: 2021-02-25 17:27:31
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-02-26 16:15:41
+ * @LastEditTime: 2021-03-13 14:40:54
  * @FilePath: /vue-cli4-demo/src/store/modules/user.js
  * @Description: 【描述】
  */
-import { login, logout, getInfo } from '@/api/user';
+import { login, logout, getInfo } from '@api/userApi';
 import { getToken, setToken, removeToken } from '@/utils/auth';
 import { resetRouter } from '@/router';
 

@@ -2,7 +2,7 @@
  * @Author: MonsterDOG
  * @Date: 2021-02-26 09:44:01
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-02-26 09:48:18
+ * @LastEditTime: 2021-03-13 15:10:43
  * @FilePath: /vue-cli4-demo/mock/user.js
  * @Description: 【描述】
  */
@@ -39,6 +39,7 @@ module.exports = [
     response: config => {
       const { username } = config.body;
       const token = tokens[username];
+      console.log(token);
 
       // mock error
       if (!token) {

@@ -2,7 +2,7 @@
  * @Author: MonsterDOG
  * @Date: 2021-02-04 16:10:55
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-02-04 17:31:56
+ * @LastEditTime: 2021-03-13 15:00:56
  * @FilePath: /vue-cli4-demo/src/views/echarts/components/demo3.vue
  * @Description: 【描述】
 -->
@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import echarts from '@/utils/echarts';
+
 var data1 = [];
 var data2 = [];
 var data3 = [];
@@ -26,7 +28,7 @@ for (var i = 0; i < 500; i++) {
 }
 export default {
   mounted() {
-    this.chart = this.$echarts.init(this.$refs.demo3);
+    this.chart = echarts.init(this.$refs.demo3);
     this.chart.setOption({
       animation: true,
       legend: {
@@ -83,9 +85,7 @@ export default {
           name: 'scatter',
           type: 'scatter',
           itemStyle: {
-            normal: {
-              opacity: 0.8
-            }
+            opacity: 0.8
           },
           symbolSize: function (val) {
             return val[2] * 40;
@@ -96,9 +96,7 @@ export default {
           name: 'scatter2',
           type: 'scatter',
           itemStyle: {
-            normal: {
-              opacity: 0.8
-            }
+            opacity: 0.8
           },
           symbolSize: function (val) {
             return val[2] * 40;
@@ -109,9 +107,7 @@ export default {
           name: 'scatter3',
           type: 'scatter',
           itemStyle: {
-            normal: {
-              opacity: 0.8
-            }
+            opacity: 0.8
           },
           symbolSize: function (val) {
             return val[2] * 40;

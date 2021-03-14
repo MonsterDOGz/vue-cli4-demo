@@ -2,7 +2,7 @@
  * @Author: MonsterDOG
  * @Date: 2021-02-02 15:25:17
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-02-03 11:32:47
+ * @LastEditTime: 2021-03-13 14:53:41
  * @FilePath: /vue-cli4-demo/src/views/echarts/components/demo1.vue
  * @Description: 【描述】dataset demo
 -->
@@ -11,9 +11,9 @@
 </template>
 
 <script>
+import echarts from '@/utils/echarts';
 import axios from 'axios';
 import '../vintage';
-import '../chalk';
 const req = axios.create();
 const url =
   'https://cdn.jsdelivr.net/gh/apache/echarts-website@asf-site/examples/data/asset/data/life-expectancy-table.json';
@@ -120,7 +120,7 @@ export default {
     };
   },
   async mounted() {
-    this.chart = this.$echarts.init(this.$refs.demo1, 'vintage');
+    this.chart = echarts.init(this.$refs.demo1, 'vintage');
     const { data } = await req.get(url);
     this.option.dataset.source = data;
     this.chart.setOption(this.option);

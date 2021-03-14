@@ -11,9 +11,11 @@
 </template>
 
 <script>
+import echarts from '@/utils/echarts';
+
 export default {
   mounted() {
-    this.chart = this.$echarts.init(this.$refs.demo5);
+    this.chart = echarts.init(this.$refs.demo5);
     var data = [];
     for (let i = 0; i < 5; ++i) {
       data.push(Math.round(Math.random() * 200));

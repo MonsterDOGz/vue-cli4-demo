@@ -2,7 +2,7 @@
  * @Author: MonsterDOG
  * @Date: 2021-02-25 10:57:42
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-02-25 11:03:00
+ * @LastEditTime: 2021-03-13 14:55:54
  * @FilePath: /vue-cli4-demo/src/views/echarts/components/demo0.vue
  * @Description: 【描述】
 -->
@@ -14,7 +14,8 @@
 </template>
 
 <script>
-import '../vintage';
+import echarts from '@/utils/echarts';
+// import '../vintage';
 export default {
   data() {
     return {
@@ -48,9 +49,10 @@ export default {
   methods: {
     // 初始化图表
     initCharts() {
-      this.chart = this.$echarts.init(this.$refs.echarts, 'vintage');
+      // this.chart = echarts.init(this.$refs.echarts, 'vintage');
+      this.chart = echarts.init(this.$refs.echarts);
       this.setOptions();
-      this.chart2 = this.$echarts.init(this.$refs.pie);
+      this.chart2 = echarts.init(this.$refs.pie);
       this.chart2.showLoading();
       this.setOptions2();
       setTimeout(() => {
@@ -67,9 +69,7 @@ export default {
                 shadowColor: 'rgba(0, 0, 0, 0.5)'
               },
               label: {
-                textStyle: {
-                  color: 'rgba(255, 255, 255, 0.3)'
-                }
+                color: 'rgba(255, 255, 255, 0.3)'
               },
               labelLine: {
                 lineStyle: {

@@ -2,7 +2,7 @@
  * @Author: MonsterDOG
  * @Date: 2021-02-26 09:44:01
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-02-26 09:44:38
+ * @LastEditTime: 2021-03-13 15:07:02
  * @FilePath: /vue-cli4-demo/mock/index.js
  * @Description: 【描述】
  */
@@ -18,8 +18,8 @@ const mocks = [
 ];
 
 // for front mock
-// please use it cautiously, it will redefine XMLHttpRequest,
-// which will cause many of your third-party libraries to be invalidated(like progress event).
+// 请谨慎使用，它将重新定义浏览器的 XMLHttpRequest 对象，
+// 这将导致你的许多第三方库无效(如进度事件)。
 function mockXHR() {
   // mock patch
   // https://github.com/nuysoft/Mock/issues/300

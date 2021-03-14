@@ -1,130 +1,81 @@
-import axios from 'axios'; // 引入axios
-import store from '../store/index.js';
-
-console.log(process.env.NODE_ENV);
-
-// 环境的切换
-// if (process.env.NODE_ENV === 'development') {
-//   axios.defaults.baseURL = '/api/yifd'
-// } else if (process.env.NODE_ENV === 'testing') {
-//   axios.defaults.baseURL = 'https://tdev.homedone.net'
-// } else if (process.env.NODE_ENV === 'production') {
-//   axios.defaults.baseURL = 'https://ddev.homedone.net'
-// }
-
-if (location.hostname === ('192.168.10.72' || 'localhost')) {
-  axios.defaults.baseURL = '/api/yifd';
-} else {
-  axios.defaults.baseURL = `https://${location.hostname}`;
-}
-
-/**
- * 请求失败后的错误统一处理
- * @param {Number} status 请求失败的状态码
+/*
+ * @Author: MonsterDOG
+ * @Date: 2020-11-25 20:28:33
+ * @LastEditors: MonsterDOG
+ * @LastEditTime: 2021-03-13 13:55:02
+ * @FilePath: /vue-cli4-demo/src/request/http.js
+ * @Description: 【描述】axios 实例，请求拦截器、响应拦截器
  */
-const errorHandle = (status, other) => {
-  // 状态码判断
-  switch (status) {
-    // 401：未登录状态，跳转登录页
-    case 401:
-      break;
-    // 403：token过期
-    // 清除token并跳转登录页
-    case 403:
-      this.$message({
-        message: '登录过期，请重新登陆',
-        type: 'warning'
-      });
-      window.sessionStorage.removeItem('token'); // 删除本地的token
-      // localStorage.removeItem('token')
-      break;
-    // 404：请求不存在
-    case 404:
-      this.$message({
-        message: '请求的资源不存在',
-        type: 'warning'
-      });
-      break;
-    // 服务器错误
-    case 500:
-      this.$message({
-        message: other,
-        type: 'warning'
-      });
-      break;
-    default:
-      console.log(other);
-  }
-};
+import axios from 'axios'; // 引入axios
+import { MessageBox, Message } from 'element-ui';
+import store from '@/store';
+import { getToken } from '@/utils/auth';
 
 // 创建axios实例
-var instance = axios.create({
-  timeout: 1000 * 100
+const instance = axios.create({
+  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  timeout: 5000
 });
 
-// post请求头
-// axios.defaults.headers.post['Content-Type'] = 'application/json'
-
-/**
- * 请求拦截器
- * 每次请求前，如果存在token则在请求头中携带token
- */
+// 请求拦截器
 instance.interceptors.request.use(
-  function (config) {
-    // 该位置会获取登陆成功时的token数据，保存到Authorization(定义绑定的头部参数为token)中，验证token是否存在，并且
-    // 与登陆时的token进行对比，验证token是否正确
-    var token = window.sessionStorage.getItem('token');
-    if (token) {
-      config.headers.token = token;
+  config => {
+    if (store.getters.token) {
+      config.headers.token = getToken();
     }
-    if (config.url.includes('ossUpload')) {
-      config.timeout = 600000;
-    } else {
-      config.timeout = 100000;
-    }
+    // 配置特殊需求的请求超时时间
+    // if (config.url.includes('ossUpload')) {
+    //   config.timeout = 60000;
+    // } else {
+    //   config.timeout = 5000;
+    // }
     return config;
   },
-  function (error) {
+  error => {
     console.log(error);
+    return Promise.reject(error);
   }
 );
 
 // 响应拦截器
 instance.interceptors.response.use(
   // 请求成功
-  res => {
-    console.log();
-    res.status === 200 ? Promise.resolve(res) : Promise.reject(res);
-    if (res.data.meta.message === 'token过期，请重新登录') {
-      if (sessionStorage.getItem('token')) {
-        alert('token过期，请重新登录');
+  response => {
+    const res = response.data;
+    // 20000 为服务端的正常响应
+    if (res.code !== 20000) {
+      Message({
+        message: res.message || 'Error',
+        type: 'error',
+        duration: 5 * 1000
+      });
+      // 50008:非法令牌;50012:其他客户端已登录;50014:令牌过期;
+      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+        // to re-login
+        MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
+          confirmButtonText: 'Re-Login',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          store.dispatch('user/resetToken').then(() => {
+            location.reload();
+          });
+        });
       }
-      window.location = '#/dLogin'; // 重定向回到登陆页面
-      window.sessionStorage.removeItem('token'); // 删除本地的token
+      return Promise.reject(new Error(res.message || 'Error'));
+    } else {
+      return res;
     }
-    return res;
   },
   // 请求失败
   error => {
-    const {
-      response
-    } = error;
-    if (response) {
-      // 请求已发出，但是不在2xx的范围
-      errorHandle(response.status, response.data.message);
-      return Promise.reject(response);
-    } else {
-      // 处理断网的情况
-      // 请求超时或断网时，更新state的network状态
-      // eg：network状态在app.vue中控制着一个全局的断网提示组件的显示隐藏
-      // 关于断网组件中的刷新重新获取数据，会在断网组件中说明
-      console.log(!window.navigator.onLine);
-      if (!window.navigator.onLine) {
-        store.commit('changeNetwork', false);
-      } else {
-        return Promise.reject(error);
-      }
-    }
+    console.log('err' + error); // for debug
+    Message({
+      message: error.message,
+      type: 'error',
+      duration: 5 * 1000
+    });
+    return Promise.reject(error);
   }
 );
 

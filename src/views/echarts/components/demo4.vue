@@ -2,7 +2,7 @@
  * @Author: MonsterDOG
  * @Date: 2021-02-04 17:50:32
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-02-04 17:56:28
+ * @LastEditTime: 2021-03-13 14:45:56
  * @FilePath: /vue-cli4-demo/src/views/echarts/components/demo4.vue
  * @Description: 【描述】
 -->
@@ -11,9 +11,10 @@
 </template>
 
 <script>
+import echarts from '@/utils/echarts';
 export default {
   mounted() {
-    this.chart = this.$echarts.init(this.$refs.demo4);
+    this.chart = echarts.init(this.$refs.demo4);
     let option = {
       title: {
         text: '饼图程序调用高亮示例',

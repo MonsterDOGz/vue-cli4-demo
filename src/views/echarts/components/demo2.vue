@@ -2,7 +2,7 @@
  * @Author: MonsterDOG
  * @Date: 2021-02-03 14:33:46
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-02-03 15:25:44
+ * @LastEditTime: 2021-03-13 14:58:05
  * @FilePath: /vue-cli4-demo/src/views/echarts/components/demo2.vue
  * @Description: 【描述】
 -->
@@ -11,9 +11,11 @@
 </template>
 
 <script>
+import echarts from '@/utils/echarts';
+
 export default {
   mounted() {
-    this.chart = this.$echarts.init(this.$refs.demo2);
+    this.chart = echarts.init(this.$refs.demo2);
     this.chart.setOption({
       tooltip: {},
       dataset: [

@@ -1,7 +1,15 @@
+/*
+ * @Author: MonsterDOG
+ * @Date: 2020-11-25 20:28:33
+ * @LastEditors: MonsterDOG
+ * @LastEditTime: 2021-03-13 14:39:14
+ * @FilePath: /vue-cli4-demo/vue.config.js
+ * @Description: 【描述】
+ */
 const path = require('path');
 
 function resolve(dir) {
-  return path.join(__dirname, '.', dir);
+  return path.join(__dirname, dir);
 }
 
 module.exports = {
@@ -14,7 +22,8 @@ module.exports = {
     resolve: {
       alias: {
         vue$: 'vue/dist/vue.esm.js',
-        '@': path.resolve('src')
+        '@': resolve('src'),
+        '@api': resolve('src/request/modules')
       }
     }
   },
@@ -32,14 +41,24 @@ module.exports = {
     open: true, // 是否在启动成功后直接打开页面
     // http 代理配置
     proxy: {
-      '/api/yifd': {
-        target: 'http://192.168.10.191:8200',
+      // '/api/yifd': {
+      //   target: 'http://192.168.10.191:8200',
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     '^/api/yifd': ''
+      //   }
+      // }
+      // change xxx-api/login => mock/login
+      // detail: https://cli.vuejs.org/config/#devserver-proxy
+      [process.env.VUE_APP_BASE_API]: {
+        target: `http://localhost:6600/mock`,
         changeOrigin: true,
         pathRewrite: {
-          '^/api/yifd': ''
+          ['^' + process.env.VUE_APP_BASE_API]: ''
         }
       }
-    }
+    },
+    before: require('./mock/mock-server.js')
   },
   // 插件配置
   pluginOptions: {
