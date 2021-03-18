@@ -2,7 +2,7 @@
  * @Author: MonsterDOG
  * @Date: 2020-11-25 20:28:33
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-03-13 13:55:02
+ * @LastEditTime: 2021-03-18 22:48:22
  * @FilePath: /vue-cli4-demo/src/request/http.js
  * @Description: 【描述】axios 实例，请求拦截器、响应拦截器
  */
@@ -52,9 +52,9 @@ instance.interceptors.response.use(
       // 50008:非法令牌;50012:其他客户端已登录;50014:令牌过期;
       if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
         // to re-login
-        MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-          confirmButtonText: 'Re-Login',
-          cancelButtonText: 'Cancel',
+        MessageBox.confirm('您已经登出，您可以取消留在此页面，或重新登录', '确认登出', {
+          confirmButtonText: '重新登录',
+          cancelButtonText: '退出',
           type: 'warning'
         }).then(() => {
           store.dispatch('user/resetToken').then(() => {

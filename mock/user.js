@@ -2,7 +2,7 @@
  * @Author: MonsterDOG
  * @Date: 2021-02-26 09:44:01
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-03-13 15:10:43
+ * @LastEditTime: 2021-03-18 22:49:34
  * @FilePath: /vue-cli4-demo/mock/user.js
  * @Description: 【描述】
  */
@@ -20,13 +20,13 @@ const users = {
   'admin-token': {
     roles: ['admin'],
     introduction: 'I am a super administrator',
-    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    avatar: 'https://tva4.sinaimg.cn/crop.0.1.1242.1242.180/005JF6Ddjw8fcbxca1nr7j30yi0ykgom.jpg?KID=imgbed,tva&Expires=1616086274&ssig=zDEqFlffOo',
     name: 'Super Admin'
   },
   'editor-token': {
     roles: ['editor'],
     introduction: 'I am an editor',
-    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    avatar: 'https://tva4.sinaimg.cn/crop.0.1.1242.1242.180/005JF6Ddjw8fcbxca1nr7j30yi0ykgom.jpg?KID=imgbed,tva&Expires=1616086274&ssig=zDEqFlffOo',
     name: 'Normal Editor'
   }
 };
@@ -45,7 +45,7 @@ module.exports = [
       if (!token) {
         return {
           code: 60204,
-          message: 'Account and password are incorrect.'
+          message: '帐号和密码不正确。'
         };
       }
 
@@ -69,7 +69,7 @@ module.exports = [
       if (!info) {
         return {
           code: 50008,
-          message: 'Login failed, unable to get user details.'
+          message: '登录失败，无法获取用户详细信息。'
         };
       }
 

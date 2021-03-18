@@ -2,25 +2,23 @@
   * @Author：xiaolong
   * @Date: 2020
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-02-26 15:58:24
-  * @Description: pdf预览，只能预览，不支持缩放、翻页等功能
+ * @LastEditTime: 2021-03-18 11:48:03
+  * @Description: pdf 模态框预览
 -->
 <template>
   <div class="pdf">
-    <div class="pdf_box" v-loading="pdfLoading" element-loading-text="拼命加载中...">
-      <canvas v-for="page in pages" :id="'the-canvas' + page" :key="page"></canvas>
-    </div>
+    <pdf-render :pdf-info="pdfInfo" class="pdf-box" />
     <div class="pdf_close" @click="$_closePdfBox">
-      <i class="iconfont iconquxiao pdf_close-icon"></i>
+      <svg-icon icon-class="quxiao" class-name="pdf_close-icon" />
     </div>
   </div>
 </template>
 
 <script>
-import { pdfjsLib, CMAP_URL } from '@/utils/pdfjs.js';
+import pdfRender from './pdfRender';
 export default {
   props: {
-    pdfUrl: {
+    pdfInfo: {
       type: Object,
       required: true,
       default: () => {
@@ -28,64 +26,10 @@ export default {
       }
     }
   },
-  data() {
-    return {
-      pages: [],
-      pdfDoc: '',
-      pdfLoading: '' // pdf加载Loading
-    };
-  },
-  created() {
-    this.$_loadFile(this.pdfUrl.url);
-  },
-  mounted() {
-    document.body.style.cssText = `overflow: hidden; padding-right: ${
-      window.innerWidth - document.body.clientWidth
-    }px`;
-    this.$once('hook:beforeDestroy', () => {
-      document.body.style.cssText = 'overflow: visiable';
-    });
+  components: {
+    pdfRender
   },
   methods: {
-    $_renderPage(num) {
-      this.pdfDoc.getPage(num).then(page => {
-        const canvas = document.getElementById('the-canvas' + num);
-        const ctx = canvas.getContext('2d');
-        const viewport = page.getViewport({
-          scale: 900 / page.getViewport({ scale: 1 }).width
-        });
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
-        canvas.style.width = viewport.width + 'px';
-        canvas.style.height = viewport.height + 'px';
-        const renderContext = {
-          canvasContext: ctx,
-          viewport: viewport
-        };
-        page.render(renderContext);
-        this.pdfLoading = false; // 关闭pdfLoading效果
-        if (this.pages > num) {
-          this.$_renderPage(num + 1);
-        }
-        this.$emit('toFather');
-      });
-    },
-    $_loadFile(url) {
-      this.pdfLoading = true; // 打开pdfLoading效果
-      var pdfInfo = {
-        url: url,
-        cMapUrl: CMAP_URL,
-        cMapPacked: true
-      };
-      var loadingTask = pdfjsLib.getDocument(pdfInfo);
-      loadingTask.promise.then(pdf => {
-        this.pdfDoc = pdf;
-        this.pages = this.pdfDoc.numPages;
-        this.$nextTick(() => {
-          this.$_renderPage(1);
-        });
-      });
-    },
     $_closePdfBox() {
       this.$emit('toFatherClosePdf');
     }

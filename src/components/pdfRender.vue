@@ -2,18 +2,13 @@
   * @Author：xiaolong
   * @Date: 2020
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-02-26 15:59:28
+ * @LastEditTime: 2021-03-18 11:45:00
   * @Description: pdf嵌入页面中预览，只能预览，不支持缩放、翻页等动能
 -->
 <template>
-  <div class="pdf_page">
-    <canvas
-      v-for="page in pages"
-      :id="
-        pdfInPageInfo.uploadId ? 'the-canvas' + page + pdfInPageInfo.uploadId : 'the-canvas' + page
-      "
-      :key="page"
-    ></canvas>
+  <div class="pdf_box">
+    <div class="pdf_loading" v-loading="pdfLoading" element-loading-text="拼命加载中..." />
+    <canvas v-for="page in pages" :id="'the-canvas' + page" :key="page" />
   </div>
 </template>
 
@@ -22,34 +17,38 @@ import { pdfjsLib, CMAP_URL } from '@/utils/pdfjs.js';
 export default {
   /**
    * 从父组件获取的pdf文件有关信息
-   * @param {Object} pdfInPageInfo
+   * @param {Object} pdfInfo
    * {
-   *    pdfUrl: String, 签章pdf文件的url --------必传项
+   *    url: String, 签章pdf文件的url --------必传项
    *    pdfWidth: Number, pdf文件width（ pdfWidth 和 pdfHeight 只传入一个即可，建议不要同时设置文件的 pdfWidth 和 pdfHeight ）
    *    pdfHeight: Number, pdf文件height
-   *    uploadId: Number pdf文件uploadId，默认可不传，如果传递了用来区分多个画布
    * }
    */
   props: {
-    pdfInPageInfo: {
+    pdfInfo: {
       type: Object,
       required: true,
       default: () => {
-        return { message: 'error' };
+        return {
+          url: '',
+          pdfWidth: 900
+        };
       }
     }
   },
   data() {
     return {
-      pages: [],
-      pdfDoc: ''
+      pages: [], // pdf page
+      pdfDoc: '',
+      pdfLoading: '' // pdf加载Loading
     };
   },
   created() {
-    this.$_loadFile(this.pdfInPageInfo.pdfUrl);
+    this.$_loadFile(this.pdfInfo.url);
   },
   methods: {
     $_loadFile(url) {
+      this.pdfLoading = true;
       var pdfInfo = {
         url: url,
         cMapUrl: CMAP_URL,
@@ -58,29 +57,25 @@ export default {
       var loadingTask = pdfjsLib.getDocument(pdfInfo);
       loadingTask.promise.then(pdf => {
         this.pdfDoc = pdf;
-        this.pages = this.pdfDoc.numPages;
+        this.pages = pdf.numPages;
         this.$nextTick(() => {
           this.$_renderPage(1);
         });
       });
     },
     $_renderPage(num) {
-      this.pdfDoc.getPage(num).then(page => {
-        let canvas = '';
-        if (this.pdfInPageInfo.uploadId) {
-          canvas = document.getElementById('the-canvas' + num + this.pdfInPageInfo.uploadId);
-        } else {
-          canvas = document.getElementById('the-canvas' + num);
-        }
-        if (!canvas) {
-          return;
-        }
+      const { pdfDoc, pdfInfo, pages } = this;
+      pdfDoc.getPage(num).then(page => {
+        const canvas = document.getElementById('the-canvas' + num);
         const ctx = canvas.getContext('2d');
-        var pdfScale = null;
-        if (this.pdfInPageInfo.pdfWidth) {
-          pdfScale = parseInt(this.pdfInPageInfo.pdfWidth) / page.getViewport({ scale: 1 }).width;
-        } else if (this.pdfInPageInfo.pdfHeight) {
-          pdfScale = parseInt(this.pdfInPageInfo.pdfHeight) / page.getViewport({ scale: 1 }).height;
+        let pdfScale = null;
+        // 优先以 pdfWidth 渲染比例，没有则已 pdfHeight 渲染比例，都没有则以 pdfWidth = 900 渲染
+        if (pdfInfo.pdfWidth) {
+          pdfScale = parseInt(pdfInfo.pdfWidth) / page.getViewport({ scale: 1 }).width;
+        } else if (pdfInfo.pdfHeight) {
+          pdfScale = parseInt(pdfInfo.pdfHeight) / page.getViewport({ scale: 1 }).height;
+        } else {
+          pdfScale = 900 / page.getViewport({ scale: 1 }).width;
         }
         const viewport = page.getViewport({
           scale: pdfScale
@@ -93,10 +88,11 @@ export default {
           canvasContext: ctx,
           viewport: viewport
         };
-        this.$emit('toFatherLoading', false); // 如果父组件中使用了loading效果，可调用此钩子函数关闭父组件loading效果
         page.render(renderContext);
-        if (this.pages > num) {
+        if (pages > num) {
           this.$_renderPage(num + 1);
+        } else {
+          this.pdfLoading = false; // 关闭 pdfLoading 效果
         }
       });
     }
@@ -105,8 +101,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.pdf_page {
+.pdf_box {
   width: 100%;
-  text-align: center;
+  height: 100%;
+  overflow: auto;
+  position: relative;
+  .pdf_loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 600px;
+    background-color: transparent;
+    z-index: -1;
+  }
 }
 </style>

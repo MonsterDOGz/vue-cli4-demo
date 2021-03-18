@@ -2,7 +2,7 @@
   * @Author：xiaolong
   * @Date: 2020
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-02-26 16:13:28
+ * @LastEditTime: 2021-03-18 23:34:51
   * @Description: 用于签章pdf文件
 -->
 <template>
@@ -13,10 +13,10 @@
         <div class="sign_warp">
           <!-- 左边 -->
           <div class="sign_left">
-            <h1 class="leftTitle">
+            <div class="leftTitle">
               文件
               <span class="contractNum">（{{ docsList.length }}份）</span>
-            </h1>
+            </div>
             <ul id="docsList" class="docsList">
               <li
                 v-for="(item, index) of docsList"
@@ -81,21 +81,27 @@
               </div>
             </div>
             <div class="arrow">
-              <i
-                class="iconfont iconxiangshang iconArrow arrow-top"
-                @click="rolling(0)"
-                title="前往顶部"
-              ></i>
-              <i
-                class="iconfont iconxiangxia iconArrow arrow-bottom"
-                @click="rolling(docsHeight)"
-                title="前往底部"
-              ></i>
+              <span class="icon-box arrow-top">
+                <svg-icon
+                  icon-class="xiangshang"
+                  class-name="iconArrow"
+                  @click="rolling(0)"
+                  title="前往顶部"
+                />
+              </span>
+              <span class="icon-box arrow-bottom">
+                <svg-icon
+                  icon-class="xiangxia"
+                  class-name="iconArrow"
+                  @click="rolling(docsHeight)"
+                  title="前往底部"
+                />
+              </span>
             </div>
           </div>
           <!-- 右边 -->
           <div class="sign_right">
-            <h1 class="rightTitle">任务状态</h1>
+            <div class="rightTitle">任务状态</div>
             <!-- 签订前 -->
             <div
               class="signBefore"
@@ -124,7 +130,7 @@
               v-if="signRight && this.docsList[this.docsCurrentNumber].isCanSign === false"
             >
               <div class="sign-success">
-                <i class="iconfont iconwancheng icon-suc"></i>
+                <svg-icon icon-class="wancheng" class-name="icon-suc" />
                 <p>签署完成</p>
               </div>
             </div>
@@ -132,22 +138,17 @@
         </div>
         <!-- 关闭按钮 -->
         <div class="previewClose" @click="closePact">
-          <i class="iconfont iconquxiao"></i>
+          <svg-icon icon-class="quxiao" class-name="icon-close" />
         </div>
       </div>
     </div>
-    <!-- 身份验证组件 -->
-    <validation v-if="validationBox" v-on:toFatherValidation="closeValidation"></validation>
   </div>
 </template>
 
 <script>
-import validation from '@/components/localComponents/validation.vue'; // 密码验证框弹框
-import { pdfjsLib, CMAP_URL } from '@/common/utils/pdfjs.js';
+import { pdfjsLib, CMAP_URL } from '@/utils/pdfjs.js';
+import { apiESignatureSealData, apiFileUrl, apiSealTheObject } from '@api/baseApi';
 export default {
-  components: {
-    validation
-  },
   /**
    * 一个数组，从父组件获取的签章有关信息，必须包含以下字段
    * @param {Array} info
@@ -175,7 +176,6 @@ export default {
       pdfNumPages: [], // 中间展示的多页pdf数组
       renderSuc: false, // 是否渲染中间pdf展示模块
       signRight: true, // 是否渲染右侧操作模块
-      validationBox: false, // 身份验证框开关
       posBean: [], // 发送给后端的签章坐标页码等信息二维数组
       posX: null, // 当前文件印章x坐标（原点在每页左下角）
       posY: null, // 当前文件印章y坐标（原点在每页左下角）
@@ -205,55 +205,53 @@ export default {
     // ---------------------------------------根据pdf文件uploadId，调用pdf文件接口，获取pdf文件url以及用户章印-----------------------------------
     // 获取传入的pdf文件信息
     getPdf() {
-      console.log(this.info);
-      this.docsList = this.info; // 获取父组件传入的所有文件信息
+      const { info, docsCurrentNumber } = this;
+      console.log(info);
+      this.docsList = info; // 获取父组件传入的所有文件信息
       this.docsList.forEach((item, index, arr) => {
         arr[index].loadType = 'byFilePath';
         arr[index].fileUrl = '';
       });
-      this.getFileUrl(this.docsList[this.docsCurrentNumber]); // 获取第一个pdf文件的url，并解析pdf
+      this.getFileUrl(this.docsList[docsCurrentNumber]); // 获取第一个pdf文件的url，并解析pdf
     },
     // 获取用户章印
     getSeal() {
       this.sealList = [];
-      this.$api.baseApi.apiESignatureSealData().then(res => {
+      apiESignatureSealData().then(res => {
         const { data } = res;
-        if (data.code === 200) {
-          this.sealList = [];
-          var temp = {};
-          temp.sealImg = 'data:image/png;base64,' + data.data;
-          temp.sealId = '签署人标识';
-          this.sealList.push(temp);
-        } else {
-          this.$message.error(data.msg);
-        }
+        this.sealList = [];
+        let temp = {};
+        temp.sealImg = 'data:image/png;base64,' + data.data;
+        temp.sealId = '签署人标识';
+        this.sealList.push(temp);
+        console.log(this.sealList);
       });
     },
     // 根据传入的uploadId获取文件url
     getFileUrl(val) {
+      const { docsCurrentNumber } = this;
       this.renderSuc = false; // 销毁pdf盒子
-      this.$api.baseApi
-        .apiFileUrl({
-          fileUploadId: val.uploadId, // 文件上传id
-          isEncryption: val.isEncryption // 文件是否加密（默认为false不加密）
-        })
-        .then(res => {
-          // 将文件url放入文件数组对象中
-          this.docsList.forEach((item, index, arr) => {
-            if (val.uploadId === item.uploadId) {
-              arr[index].fileUrl = res.data;
-              this.rendererPdf(this.docsCurrentNumber); // 解析pdf
-              this.$nextTick(() => {
-                this.renderSuc = true; // 重新渲染pdf盒子
-              });
-            }
-          });
+      apiFileUrl({
+        fileUploadId: val.uploadId, // 文件上传id
+        isEncryption: val.isEncryption // 文件是否加密（默认为false不加密）
+      }).then(res => {
+        // 将文件url放入文件数组对象中
+        this.docsList.forEach((item, index, arr) => {
+          if (val.uploadId === item.uploadId) {
+            arr[index].fileUrl = res.data;
+            this.rendererPdf(docsCurrentNumber); // 解析pdf
+            this.$nextTick(() => {
+              this.renderSuc = true; // 重新渲染pdf盒子
+            });
+          }
         });
+      });
     },
     // 确认签署按钮
     submitSign() {
+      const { docsCurrentNumber } = this;
       console.log(this.posBean);
-      const _posBeanItem = this.posBean[this.docsCurrentNumber];
+      const _posBeanItem = this.posBean[docsCurrentNumber];
       // 确定签章数只能是一个
       if (_posBeanItem.length > 1 || _posBeanItem.length < 1) {
         this.$alert(
@@ -273,32 +271,23 @@ export default {
       this.posY = _posBeanItem[0].posY;
       this.page = _posBeanItem[0].posPage;
       // 打开身份验证弹框
-      this.validationBox = true;
-    },
-    // 身份验证弹框回调接收方法
-    closeValidation(data) {
-      this.validationBox = false;
-      // 如果身份验证弹框有返回值，调用签章统一接口
-      if (data) {
-        this.getSealTheObject(data);
-      } else {
-        this.$message('已取消');
-      }
+      this.getSealTheObject(data);
     },
     // 调用统一签章接口
     getSealTheObject(data) {
-      const _dosc = this.docsList[this.docsCurrentNumber];
+      const { docsCurrentNumber, posX, posY, page } = this;
+      const _dosc = this.docsList[docsCurrentNumber];
       this.openFullScreen(); // loading
-      var sealInfo = {};
+      let sealInfo = {};
       Object.assign(sealInfo, {
         fileUploadId: _dosc.uploadId, // 文件上传id
-        posX: this.posX, // 签章x位置
-        posY: this.posY, // 签章y位置
-        page: this.page, // 签章页码
+        posX, // 签章x位置
+        posY, // 签章y位置
+        page, // 签章页码
         status: data.status, // 状态
         pwd: data.pwd // 密钥
       });
-      this.$api.baseApi.apiSealTheObject(sealInfo).then(res => {
+      apiSealTheObject(sealInfo).then(res => {
         this.loading.close();
         const { data } = res;
         if (data.code === 200 && data.data.flag) {
@@ -346,11 +335,12 @@ export default {
     },
     // 跳转页
     jumpPage() {
+      const { nowPage } = this;
       const signContainer = document.getElementById('signContainer');
       if (!signContainer) {
         return;
       }
-      const pageD = document.getElementById('pageView_' + this.nowPage);
+      const pageD = document.getElementById('pageView_' + nowPage);
       signContainer.scrollTo(0, pageD.offsetTop);
     },
     // 验证输入的页码
@@ -379,9 +369,9 @@ export default {
     },
     // 获取屏幕缩放比例
     detectZoom() {
-      var ratio = 1;
-      var screen = window.screen;
-      var ua = navigator.userAgent.toLowerCase();
+      let ratio = 1;
+      const screen = window.screen;
+      const ua = navigator.userAgent.toLowerCase();
       if (window.devicePixelRatio !== undefined) {
         ratio = window.devicePixelRatio;
       } else if (~ua.indexOf('msie')) {
@@ -400,14 +390,16 @@ export default {
     // ------------------------------------------渲染pdf、印章相关---------------------------------------------
     // 点击左侧切换文档
     changeDocs(event, docsNumber) {
+      const { docsList } = this;
       this.docsCurrentNumber = docsNumber; // 获取当前处于第几个文件的位置
-      this.getFileUrl(this.docsList[docsNumber]); // 重新获取文件pdf
+      this.getFileUrl(docsList[docsNumber]); // 重新获取文件pdf
       this.init(); // 初始化
     },
     // 初始化
     init() {
+      const { docsCurrentNumber } = this;
       // 初始化 posBean
-      this.posBean[this.docsCurrentNumber] = [];
+      this.posBean[docsCurrentNumber] = [];
       this.pdfNumPages = [];
       this.nowPage = 1;
       this.allPage = 1;
@@ -415,27 +407,28 @@ export default {
     },
     // 解析pdf
     rendererPdf(docsNumber) {
+      const { docsList } = this;
       this.pdfLoading = true; // 打开pdfLoading效果
       // 获取文档方式
-      const loadType = this.docsList[docsNumber].loadType;
+      const loadType = docsList[docsNumber].loadType;
       // 获取文档值
-      const docValue = this.docsList[docsNumber].fileUrl;
+      const docValue = docsList[docsNumber].fileUrl;
       // 获取文件base64码
-      const base64Con = this.docsList[docsNumber].base64Con;
+      const base64Con = docsList[docsNumber].base64Con;
       // PDF文件
-      var pdfValue = null;
+      let pdfValue = null;
       // 判断文件类型，如果是base64型需要先解析再处理；如果是url链接直接处理
       if (loadType === 'byBase64') {
         // 通过Base64获取PDF
-        var pdfBase64 = base64Con;
-        var pdfFileBinary = this.convertDataURIToBinary(pdfBase64);
+        const pdfBase64 = base64Con;
+        const pdfFileBinary = this.convertDataURIToBinary(pdfBase64);
         pdfValue = pdfFileBinary;
       } else {
         pdfValue = docValue;
       }
       console.log('pdfValue', pdfValue);
       // ---------------------------------------------------------------------
-      var pdfInfo = {
+      const pdfInfo = {
         url: pdfValue,
         cMapUrl: CMAP_URL,
         cMapPacked: true
@@ -447,10 +440,11 @@ export default {
     },
     // 循环渲染 pages
     renderer() {
-      if (!this.loadingTask) {
+      const { loadingTask } = this;
+      if (!loadingTask) {
         return;
       }
-      this.loadingTask.promise.then(
+      loadingTask.promise.then(
         pdf => {
           this.allPage = pdf.numPages; // 保存当前文件总的页码数
           for (let index = 1; index <= pdf.numPages; index++) {
@@ -460,17 +454,17 @@ export default {
             pdf &&
               pdf.getPage(index).then(page => {
                 // pdf 解析的比例， 获取原始文档尺寸 scale = 1; 如果文档放大，印章x y 需要同比例缩放
-                var scale = this.scale;
-                var viewport = page.getViewport({ scale: scale });
+                const { scale } = this;
+                const viewport = page.getViewport({ scale });
                 // Prepare canvas using PDF page dimensions
                 // 遍历 pdf.numPages， 传递 不同的 Canvas ID
-                var canvas = document.getElementById('pageCanvas_' + index);
-                var context = canvas.getContext('2d');
+                let canvas = document.getElementById('pageCanvas_' + index);
+                const context = canvas.getContext('2d');
                 // 设置 canvas
                 canvas.height = viewport.height;
                 canvas.width = viewport.width;
                 // 设置外层大小
-                var pageView = document.getElementById('pageView_' + index);
+                let pageView = document.getElementById('pageView_' + index);
                 pageView.style.height = viewport.height + 'px';
                 pageView.style.width = viewport.width + 'px';
                 // Render PDF page into canvas context
@@ -500,28 +494,30 @@ export default {
     },
     // 缩放文件后，调整印章位置大小
     rendererSeal(pageNumber, pageViewOffsetHeight) {
-      const _posBeanDosc = this.posBean[this.docsCurrentNumber];
+      const { posBean, docsCurrentNumber } = this;
+      const _posBeanDosc = posBean[docsCurrentNumber];
       _posBeanDosc.length &&
         _posBeanDosc.forEach(item => {
           if (item.posPage === pageNumber) {
-            var sealDom = document.getElementById('drag' + item.id);
+            let sealDom = document.getElementById('drag' + item.id);
             sealDom.style.cssText = this.changeSealStyle(item, pageViewOffsetHeight);
           }
         });
     },
     // 新增印章dom方法
     rendererSealTemplate(dragData, pageViewOffsetHeight) {
-      const _posBeanDosc = this.posBean[this.docsCurrentNumber];
-      var pageView_ = document.getElementById('pageView_' + dragData.posPage);
+      const { posBean, docsCurrentNumber } = this;
+      const _posBeanDosc = posBean[docsCurrentNumber];
+      const pageView_ = document.getElementById('pageView_' + dragData.posPage);
       // 创建一个印章
-      var strongobj = document.createElement('div');
+      let strongobj = document.createElement('div');
       strongobj.id = 'drag' + dragData.id;
       strongobj.className = 'sealView';
       strongobj.style.cssText = this.changeSealStyle(dragData, pageViewOffsetHeight);
       pageView_.appendChild(strongobj);
       // 创建一个删除按钮
-      var seal = document.getElementById('drag' + dragData.id);
-      var sealDel = document.createElement('p');
+      const seal = document.getElementById('drag' + dragData.id);
+      let sealDel = document.createElement('p');
       sealDel.className = 'sealDel iconfont iconquxiao sealDelHover';
       // 绑定删除印章事件
       sealDel.addEventListener('click', () => {
@@ -531,7 +527,7 @@ export default {
             break;
           }
         }
-        var drag = document.getElementById('drag' + dragData.id);
+        const drag = document.getElementById('drag' + dragData.id);
         drag.remove();
       });
       seal.appendChild(sealDel);
@@ -546,10 +542,10 @@ export default {
     },
     // 将encodeBase64解码
     convertDataURIToBinary(dataURI) {
-      var raw = window.atob(dataURI);
-      var rawLength = raw.length;
+      let raw = window.atob(dataURI);
+      const rawLength = raw.length;
       // 转换成pdf.js能直接解析的Uint8Array类型,见pdf.js-4068
-      var array = new Uint8Array(new ArrayBuffer(rawLength));
+      let array = new Uint8Array(new ArrayBuffer(rawLength));
       for (let i = 0; i < rawLength; i++) {
         array[i] = raw.charCodeAt(i);
       }
@@ -595,10 +591,10 @@ export default {
     // 在一个拖动过程中，释放鼠标键时触发此事件
     ondrop(event, page) {
       // console.log('drop')
-      const { scale } = this;
+      const { scale, docsCurrentNumber } = this;
       const leftBlank = document.documentElement.clientWidth * 0.05; // 左侧空白部分
       const topBlank = document.documentElement.clientHeight * 0.05; // 上方空白部分
-      var scrollTopDistance = 0; // 外部滚动条垂直方向滚动距离
+      let scrollTopDistance = 0; // 外部滚动条垂直方向滚动距离
       if (document.body && document.body.scrollTop) {
         scrollTopDistance = document.body.scrollTop;
       }
@@ -631,7 +627,7 @@ export default {
       dragData.width = dragData.width || 120;
       dragData.height = dragData.height || 120;
       dragData.id = 'seal_' + Date.parse(new Date());
-      this.posBean[this.docsCurrentNumber].push(dragData);
+      this.posBean[docsCurrentNumber].push(dragData);
       // 直接组装dom，append 插入到 pageView_1
       this.rendererSealTemplate(dragData, pageView.offsetHeight);
     }
@@ -640,7 +636,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/* 必要 */
 .pdf {
   width: 100%;
   height: 100%;
@@ -850,7 +845,7 @@ export default {
             bottom: 40px;
             right: 40px;
 
-            .iconArrow {
+            .icon-box {
               display: block;
               width: 35px;
               height: 35px;
@@ -858,13 +853,14 @@ export default {
               line-height: 35px;
               border-radius: 50%;
               background-color: #303133;
-              color: #fff;
-              font-size: 18px;
               cursor: pointer;
               transition: 0.2s;
-
               &:hover {
                 background-color: rgba(0, 0, 0, 1);
+              }
+              .iconArrow {
+                color: #fff;
+                font-size: 18px;
               }
             }
 
@@ -983,7 +979,7 @@ export default {
           background-color: rgba(0, 0, 0, 1);
         }
 
-        i {
+        .icon-close {
           font-size: 25px;
           position: absolute;
           bottom: 14%;
@@ -1005,7 +1001,7 @@ export default {
   }
 }
 
->>> .sealView&:hover .sealDelHover {
+>>> .sealView::hover .sealDelHover {
   display: inline-block;
 }
 

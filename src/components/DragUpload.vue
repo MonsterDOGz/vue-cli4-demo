@@ -2,7 +2,7 @@
   * @Author：xiaolong
   * @Date: 2020
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-02-26 16:13:13
+ * @LastEditTime: 2021-03-18 14:33:51
   * @Description: 拖拽上传 模块
 -->
 <template>
@@ -36,6 +36,7 @@
 
 <script>
 import { Base64 } from 'js-base64';
+import { apiGetPolicy } from '@api/baseApi';
 const type = ['pdf', 'jpg', 'jpeg', 'png', 'zip', 'rar', 'doc', 'docx', 'xlsx']; // 目前考虑到的所有文件类型
 export default {
   /**
@@ -108,7 +109,8 @@ export default {
     // 获取签名信息
     async $_getSignature() {
       try {
-        const res = await this.$api.baseApi.apiGetPolicy(this.fileNeedSave);
+        const { fileNeedSave } = this;
+        const res = await apiGetPolicy({ fileNeedSave });
         const { data } = res.data;
         return Object.assign(
           {},

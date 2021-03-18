@@ -2,7 +2,7 @@
  * @Author: MonsterDOG
  * @Date: 2021-02-26 09:44:01
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-03-13 15:07:02
+ * @LastEditTime: 2021-03-18 23:03:11
  * @FilePath: /vue-cli4-demo/mock/index.js
  * @Description: 【描述】
  */
@@ -11,10 +11,12 @@ const { param2Obj } = require('./utils');
 
 const user = require('./user');
 const table = require('./table');
+const base = require('./base');
 
 const mocks = [
   ...user,
-  ...table
+  ...table,
+  ...base
 ];
 
 // for front mock

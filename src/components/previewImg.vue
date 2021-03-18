@@ -2,7 +2,7 @@
   * @Author：xiaolong
   * @Date: 2020
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-02-26 16:13:37
+ * @LastEditTime: 2021-03-18 20:00:11
   * @Description: 图片预览组件，支持多张图片翻页、放大缩小
 -->
 
@@ -59,28 +59,42 @@ export default {
             size: 'large'
           },
           reset: {
-            show: 0
+            // show: 0
+            show: 1,
+            size: 'large'
           },
           prev: {
-            show: 1
+            show: 1,
+            size: 'large'
           },
           play: {
-            show: 0
+            // show: 0
+            show: 1,
+            size: 'large'
           },
           next: {
-            show: 1
+            show: 1,
+            size: 'large'
           },
           rotateLeft: {
-            show: 0
+            // show: 0
+            show: 1,
+            size: 'large'
           },
           rotateRight: {
-            show: 0
+            // show: 0
+            show: 1,
+            size: 'large'
           },
           flipHorizontal: {
-            show: 0
+            // show: 0
+            show: 1,
+            size: 'large'
           },
           flipVertical: {
-            show: 0
+            // show: 0
+            show: 1,
+            size: 'large'
           }
         }
       }
@@ -107,58 +121,58 @@ export default {
 </style>
 
 <style lang="scss">
-// .viewer-container {
-//   .viewer-footer {
-//     .viewer-toolbar {
-//       ul {
-//         // 左箭头
-//         .viewer-prev {
-//           position: fixed;
-//           top: 50%;
-//           left: 5%;
-//           transform: translate(-50%, -50%);
-//           width: 62px;
-//           height: 62px;
+.viewer-container {
+  .viewer-footer {
+    .viewer-toolbar {
+      ul {
+        // 左箭头
+        .viewer-prev {
+          position: fixed;
+          top: 50%;
+          left: 5%;
+          transform: translate(-50%, -50%);
+          width: 62px;
+          height: 62px;
 
-//           &::before {
-//             background: url('/public/img/icon-left.png') no-repeat top 14px left 13px;
-//             width: 62px;
-//             height: 62px;
-//           }
-//         }
+          &::before {
+            background: url('../assets/icon-left.png') no-repeat top 14px left 13px;
+            width: 62px;
+            height: 62px;
+          }
+        }
 
-//         // 右箭头
-//         .viewer-next {
-//           position: fixed;
-//           top: 50%;
-//           right: 5%;
-//           transform: translate(50%, -50%);
-//           width: 62px;
-//           height: 62px;
+        // 右箭头
+        .viewer-next {
+          position: fixed;
+          top: 50%;
+          right: 5%;
+          transform: translate(50%, -50%);
+          width: 62px;
+          height: 62px;
 
-//           &::before {
-//             background: url('/public/img/icon-right.png') no-repeat top 14px left 15px;
-//             width: 62px;
-//             height: 62px;
-//           }
-//         }
-//       }
-//     }
-//   }
+          &::before {
+            background: url('../assets/icon-right.png') no-repeat top 14px left 15px;
+            width: 62px;
+            height: 62px;
+          }
+        }
+      }
+    }
+  }
 
-//   // 关闭按钮
-//   .viewer-close {
-//     width: 100px;
-//     height: 100px;
-//     right: -50px;
-//     top: -50px;
+  // 关闭按钮
+  .viewer-close {
+    width: 100px;
+    height: 100px;
+    right: -50px;
+    top: -50px;
 
-//     &::before {
-//       background: url('/public/img/icon-close.png') no-repeat top 24px left 4px;
-//       background-size: 20px 20px;
-//       width: 50px;
-//       height: 50px;
-//     }
-//   }
-// }
+    &::before {
+      background: url('../assets/icon-close.png') no-repeat top 24px left 4px;
+      background-size: 20px 20px;
+      width: 50px;
+      height: 50px;
+    }
+  }
+}
 </style>
