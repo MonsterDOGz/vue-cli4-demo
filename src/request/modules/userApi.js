@@ -2,7 +2,7 @@
  * @Author: MonsterDOG
  * @Date: 2021-03-13 13:25:36
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-03-13 14:34:05
+ * @LastEditTime: 2021-03-19 14:06:13
  * @FilePath: /vue-cli4-demo/src/request/modules/userApi.js
  * @Description: 【描述】
  */
@@ -24,7 +24,7 @@ export function getInfo (token) {
   });
 }
 export function logout() {
-  return ({
+  return axios({
     url: `${base.template}/user/logout`,
     method: 'post'
   });

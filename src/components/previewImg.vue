@@ -2,7 +2,7 @@
   * @Author：xiaolong
   * @Date: 2020
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-03-18 20:00:11
+ * @LastEditTime: 2021-03-19 14:08:27
   * @Description: 图片预览组件，支持多张图片翻页、放大缩小
 -->
 
@@ -138,6 +138,7 @@ export default {
             background: url('../assets/icon-left.png') no-repeat top 14px left 13px;
             width: 62px;
             height: 62px;
+            margin: 0;
           }
         }
 
@@ -154,6 +155,7 @@ export default {
             background: url('../assets/icon-right.png') no-repeat top 14px left 15px;
             width: 62px;
             height: 62px;
+            margin: 0;
           }
         }
       }

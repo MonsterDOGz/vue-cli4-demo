@@ -2,7 +2,7 @@
   * @Author：xiaolong
   * @Date: 2020
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-03-18 23:34:51
+ * @LastEditTime: 2021-03-19 13:47:27
   * @Description: 用于签章pdf文件
 -->
 <template>
@@ -271,10 +271,10 @@ export default {
       this.posY = _posBeanItem[0].posY;
       this.page = _posBeanItem[0].posPage;
       // 打开身份验证弹框
-      this.getSealTheObject(data);
+      this.getSealTheObject();
     },
     // 调用统一签章接口
-    getSealTheObject(data) {
+    getSealTheObject() {
       const { docsCurrentNumber, posX, posY, page } = this;
       const _dosc = this.docsList[docsCurrentNumber];
       this.openFullScreen(); // loading
@@ -283,29 +283,29 @@ export default {
         fileUploadId: _dosc.uploadId, // 文件上传id
         posX, // 签章x位置
         posY, // 签章y位置
-        page, // 签章页码
-        status: data.status, // 状态
-        pwd: data.pwd // 密钥
+        page // 签章页码
+        // status: data.status, // 状态
+        // pwd: data.pwd // 密钥
       });
       apiSealTheObject(sealInfo).then(res => {
         this.loading.close();
         const { data } = res;
-        if (data.code === 200 && data.data.flag) {
+        if (data.flag) {
           _dosc.isCanSign = false; // 签章完成
           // 重新渲染右侧模块
           this.signRight = false;
           this.$nextTick(() => {
             this.signRight = true;
           });
-          this.$emit('toFatherClose', _dosc); // 去调用父页面的签章接口二（业务接口）,提示在业务接口成功之后
+          this.$emit('to-father-close', _dosc); // 去调用父页面的签章接口二（业务接口）,提示在业务接口成功之后
         } else {
-          this.$message.error(data.data.msg);
+          this.$message.error(data.msg);
         }
       });
     },
     // 关闭签章弹框
     closePact() {
-      this.$emit('toFatherClose');
+      this.$emit('to-father-close');
     },
     // loading效果
     openFullScreen() {
@@ -650,6 +650,8 @@ export default {
   .pdfBox {
     width: 90%;
     height: 90%;
+    min-width: 900px;
+    min-height: 500px;
     position: relative;
     top: 50%;
     left: 50%;

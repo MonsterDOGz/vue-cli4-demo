@@ -2,7 +2,7 @@
  * @Author: MonsterDOG
  * @Date: 2020-11-25 17:53:45
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-03-18 20:09:09
+ * @LastEditTime: 2021-03-19 15:23:55
  * @FilePath: /vue-cli4-demo/src/views/Home.vue
  * @Description: 【描述】
 -->
@@ -15,8 +15,17 @@
 
     <app-pdf v-if="pdfBox" :pdf-info="pdfInfo" @toFatherClosePdf="pdfBox = false" />
     <preview-img ref="previewImg" :images="images" />
-    <upload-dialog v-if="uploadBox" :dialog-info="dialogInfo" :button-loading="buttonLoading" />
-    <sign-contract v-if="signContractBox" :info="signInfo" />
+    <upload-dialog
+      v-if="uploadBox"
+      :dialog-info="dialogInfo"
+      :button-loading="buttonLoading"
+      @close-dialog="uploadBox = false"
+    />
+    <sign-contract
+      v-if="signContractBox"
+      :info="signInfo"
+      @to-father-close="closeSignContractBox"
+    />
   </div>
 </template>
 
@@ -62,6 +71,14 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    closeSignContractBox(data) {
+      if (data) {
+      } else {
+        this.signContractBox = false;
+      }
+    }
   }
 };
 </script>
