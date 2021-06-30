@@ -2,8 +2,8 @@
  * @Author: MonsterDOG
  * @Date: 2021-03-11 14:10:14
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-03-18 14:39:57
- * @FilePath: /vue-cli4-demo/src/components/UploadDialog.vue
+ * @LastEditTime: 2021-06-15 15:02:14
+ * @FilePath: \vue-cli4-demo\src\components\UploadDialog.vue
  * @Description: 【描述】上传
 -->
 <template>
@@ -40,8 +40,13 @@ export default {
   },
   data() {
     return {
-      outerVisible: true // 是否显示整个组件
+      outerVisible: false // 是否显示整个组件
     };
+  },
+  created() {
+    setTimeout(() => {
+      this.outerVisible = true;
+    }, 3000);
   },
   methods: {
     $_closeDialog() {
