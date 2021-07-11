@@ -2,7 +2,7 @@
  * @Author: MonsterDOG
  * @Date: 2020-11-25 20:28:33
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-03-18 17:05:42
+ * @LastEditTime: 2021-04-15 14:06:09
  * @FilePath: /vue-cli4-demo/vue.config.js
  * @Description: 【描述】
  */
@@ -42,7 +42,7 @@ module.exports = {
     // http 代理配置
     proxy: {
       // '/api/yifd': {
-      //   target: 'http://192.168.10.191:8200',
+      //   target: 'http://www.shenge.com/',
       //   changeOrigin: true,
       //   pathRewrite: {
       //     '^/api/yifd': ''
