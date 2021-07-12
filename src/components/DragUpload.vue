@@ -2,7 +2,7 @@
   * @Author：xiaolong
   * @Date: 2020
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-03-18 14:33:51
+ * @LastEditTime: 2021-06-30 15:54:06
   * @Description: 拖拽上传 模块
 -->
 <template>
@@ -112,18 +112,15 @@ export default {
         const { fileNeedSave } = this;
         const res = await apiGetPolicy({ fileNeedSave });
         const { data } = res.data;
-        return Object.assign(
-          {},
-          {
-            accessid: data.accessid, // oss用户ID
-            policyBase64: data.policy, // 上传策略
-            signature: data.signature, // 签名
-            key: data.dir, // oss上传文件夹目录
-            host: data.host, // 文件上传地址
-            expire: data.expire, // 有效期
-            callbackbody: data.callback // 回调参数
-          }
-        );
+        return {
+          accessid: data.accessid, // oss用户ID
+          policyBase64: data.policy, // 上传策略
+          signature: data.signature, // 签名
+          key: data.dir, // oss上传文件夹目录
+          host: data.host, // 文件上传地址
+          expire: data.expire, // 有效期
+          callbackbody: data.callback // 回调参数
+        };
       } catch (error) {
         console.log(error);
       }
