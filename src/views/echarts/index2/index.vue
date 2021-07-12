@@ -2,7 +2,7 @@
  * @Author: MonsterDOG
  * @Date: 2021-02-01 11:38:39
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-02-26 15:18:50
+ * @LastEditTime: 2021-04-16 16:44:16
  * @FilePath: /vue-cli4-demo/src/views/echarts/index2/index.vue
  * @Description: 【描述】
 -->
@@ -12,6 +12,36 @@
     <demo4 class="item" />
     <demo3 class="item" />
     <demo5 class="item" />
+    <img
+      v-lazy="
+        'https://res.cloudinary.com/dzq1l03yt/image/upload/v1593513400/Nature/image_18_lwam5y.jpg'
+      "
+    />
+    <img
+      v-lazy="
+        'https://res.cloudinary.com/dzq1l03yt/image/upload/v1593513400/Nature/image_18_lwam5y.jpg'
+      "
+    />
+    <img
+      v-lazy="
+        'https://res.cloudinary.com/dzq1l03yt/image/upload/v1593513400/Nature/image_18_lwam5y.jpg'
+      "
+    />
+    <img
+      v-lazy="
+        'https://res.cloudinary.com/dzq1l03yt/image/upload/v1593513400/Nature/image_18_lwam5y.jpg'
+      "
+    />
+    <img
+      v-lazy="
+        'https://res.cloudinary.com/dzq1l03yt/image/upload/v1593513400/Nature/image_18_lwam5y.jpg'
+      "
+    />
+    <img
+      v-lazy="
+        'https://res.cloudinary.com/dzq1l03yt/image/upload/v1593513400/Nature/image_18_lwam5y.jpg'
+      "
+    />
   </div>
 </template>
 

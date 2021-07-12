@@ -92,6 +92,47 @@ export const constantRoutes = [
   },
 
   {
+    path: '/threeJsDemo',
+    component: Layout,
+    redirect: '/threeJsDemo/threeJsDemo',
+    children: [
+      {
+        path: 'threeJsDemo',
+        name: 'ThreeJsDemo',
+        component: () => import('@/views/threeJsDemo/index'),
+        meta: { title: 'ThreeJsDemo', icon: 'cyberpunk' }
+      }
+    ]
+  },
+
+  {
+    path: '/map',
+    component: Layout,
+    redirect: '/map/map',
+    children: [
+      {
+        path: 'map',
+        name: 'Map',
+        component: () => import('@/views/map/index'),
+        meta: { title: 'map', icon: 'map' }
+      }
+    ]
+  },
+  {
+    path: '/cssShuffling',
+    component: Layout,
+    redirect: '/cssShuffling/cssShuffling',
+    children: [
+      {
+        path: 'cssShuffling',
+        name: 'CssShuffling',
+        component: () => import('@/views/cssShuffling/index'),
+        meta: { title: 'cssShuffling', icon: 'map' }
+      }
+    ]
+  },
+
+  {
     path: '/external-link',
     component: Layout,
     children: [
