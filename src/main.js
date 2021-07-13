@@ -2,8 +2,8 @@
  * @Author: MonsterDOG
  * @Date: 2020-07-09 09:25:41
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-05-19 17:50:04
- * @FilePath: /vue-cli4-demo/src/main.js
+ * @LastEditTime: 2021-07-12 10:21:57
+ * @FilePath: \vue-cli4-demo\src\main.js
  * @Description: 【描述】
  */
 import Vue from 'vue';
@@ -77,17 +77,3 @@ function getVersion(ua) {
   return ('' + ua.match(versionReg)).slice(8);
 };
 console.log(getVersion(a));
-
-function Duck() {
-  // 请完善这个函数
-}
-Duck.prototype.go = function(val) {
-  console.log(this);
-};
-Duck.prototype.sing = function(val) {
-  console.log(this);
-};
-
-// 用法
-var duck = new Duck();
-duck.go('100').sing('hello');
