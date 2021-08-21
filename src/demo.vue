@@ -1,42 +1,35 @@
+<!--
+ * @Author: MonsterDOG
+ * @Date: 2021-08-16 16:55:16
+ * @LastEditors: MonsterDOG
+ * @LastEditTime: 2021-08-21 17:47:55
+ * @FilePath: \vue-cli4-demo\src\demo.vue
+ * @Description: 【描述】
+-->
 <template>
   <div>
-    <!-- 对象渲染 -->
-    <div
-      class="static"
-      v-bind:class="{ active: isActive, 'text-danger': hasError }"
-    ></div>
-    <!-- 对象渲染结果 -->
-    <!-- <div class="static active"></div> -->
-
-    <!-- 数组渲染 -->
-    <div v-bind:class="[activeClass, errorClass]"></div>
-    <!-- 数组渲染结果 -->
-    <!-- <div class="active text-danger"></div> -->
+    <span>{{ name }}</span>
+    <span>{{ labelName }}</span>
   </div>
 </template>
 
 <script>
 export default {
-  data () {
-    return {
-      isActive: true,
-      hasError: false,
-      activeClass: 'active',
-      errorClass: 'text-danger'
-    };
+  computed: {
+    // 组件中使用仓库的 state
+    name() {
+      return this.$store.state.name;
+    },
+    // 组件中使用仓库的 getter
+    labelName() {
+      return this.$store.getters.labelName;
+    }
   },
   created() {
-    // 可以进行一些初始化操作、发起异步请求获取数据
-  },
-  mounted() {
-    // 可以处理一些依赖 DOM 的操作（比如监听 DOM 事件）
-  },
-  beforeDestroy() {
-    // 可以用来做一些销毁操作（比如销毁定时器）
+    // 组件中调用 actions 方法去改变状态值
+    this.$store.dispatch('queryName', { username: 'gc', password: '******' });
   }
 };
 </script>
 
-<style>
-
-</style>
+<style></style>
