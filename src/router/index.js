@@ -47,12 +47,14 @@ export const constantRoutes = [
     path: '/',
     component: Layout,
     redirect: '/home',
-    children: [{
-      path: 'home',
-      name: '首页',
-      component: () => import('@/views/Home'),
-      meta: { title: '首页', icon: 'dashboard' }
-    }]
+    children: [
+      {
+        path: 'home',
+        name: '首页',
+        component: () => import('@/views/Home'),
+        meta: { title: '首页', icon: 'dashboard' }
+      }
+    ]
   },
 
   {
@@ -131,6 +133,19 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/css3D',
+    component: Layout,
+    redirect: '/css3D/css3D',
+    children: [
+      {
+        path: 'css3D',
+        name: 'Css3D',
+        component: () => import('@/views/css3D/index'),
+        meta: { title: 'css3D', icon: 'map' }
+      }
+    ]
+  },
 
   {
     path: '/external-link',
@@ -147,11 +162,12 @@ export const constantRoutes = [
   { path: '*', redirect: '/404', hidden: true }
 ];
 
-const createRouter = () => new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
-});
+const createRouter = () =>
+  new Router({
+    // mode: 'history', // require service support
+    scrollBehavior: () => ({ y: 0 }),
+    routes: constantRoutes
+  });
 
 const router = createRouter();
 
