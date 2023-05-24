@@ -2,7 +2,7 @@
  * @Author: MonsterDOG
  * @Date: 2020-07-09 09:25:41
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-07-12 10:21:57
+ * @LastEditTime: 2023-04-27 11:26:05
  * @FilePath: \vue-cli4-demo\src\main.js
  * @Description: 【描述】
  */
@@ -34,9 +34,9 @@ import { init, bind } from './utils/custom-life-cycle'; // 自定义生命周期
 init();
 
 // 初始化鼠标特效
-window.addEventListener('load', () => {
-  LegendaryCursor.init();
-});
+// window.addEventListener('load', () => {
+//   LegendaryCursor.init();
+// });
 
 /**
   * 如果您不想使用模拟服务器

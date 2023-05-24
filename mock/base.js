@@ -2,8 +2,8 @@
  * @Author: MonsterDOG
  * @Date: 2021-02-26 09:44:01
  * @LastEditors: MonsterDOG
- * @LastEditTime: 2021-03-19 14:21:32
- * @FilePath: /vue-cli4-demo/mock/base.js
+ * @LastEditTime: 2023-04-25 20:22:14
+ * @FilePath: \vue-cli4-demo\mock\base.js
  * @Description: 【描述】
  */
 const Mock = require('mockjs');
@@ -35,7 +35,7 @@ module.exports = [
     url: '/api/file/v1/fileUrl',
     type: 'get',
     response: config => {
-      const url = 'http://xitianqujing.oss-cn-hangzhou.aliyuncs.com/8f1d3b29-7f2a-4afb-9f97-c6d1d37e23ee.pdf';
+      const url = 'https://is836c-public.oss.lafyun.com/dist/img/8f1cf2ad-eee6-4296-b223-35e38618eb47_%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96.pdf';
       return {
         code: 20000,
         data: url
